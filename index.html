@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ThisKorea81 - 인공지능 지식 공유</title>
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <style>
     header {
@@ -16,6 +17,14 @@
     }
     nav ul li a {
       color: #f0f0f0; /* 별빛처럼 밝은 글씨 */
+    }
+    sidebar {
+      position: fixed;
+      width: 200px;
+      height: 100%;
+      background: #f0f0f0;
+      padding: 20px;
+      overflow: auto;
     }
     footer {
       background: #f8f9fa;
@@ -58,6 +67,13 @@
       </ul>
     </div>
   </nav>
+
+  <div class="sidebar">
+    <!-- Sidebar content -->
+    <a href="#whileLoops">Python While Loops</a>
+    <a href="#forLoops">Python For Loops</a>
+    <!-- More links -->
+  </div>
 
   <article class="container mt-5">
     <!-- 이곳에 각 페이지의 내용이 들어갑니다. -->
