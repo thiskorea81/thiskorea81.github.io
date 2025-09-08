@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 기초 대화형 복습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is designed as a single-page tabbed interface. Four main sections (Variables, Operators, Conditionals, Loops) are presented as navigable tabs. This structure was chosen because it logically segments the distinct topics from the source report, allowing students to focus on one concept at a time without being overwhelmed. The user flow is simple: click a tab, and the relevant interactive module appears. This is more user-friendly than a long, scrolling document and promotes focused, active learning by replacing static code blocks with live, interactive "sandboxes" where students can manipulate inputs and see immediate results. A new section for String Formatting has been added under Operators to incorporate the user's latest request. -->
+    <!-- Visualization & Content Choices: 
+        1. Variables & Types: Goal(Inform) -> Code/Output Display -> Interaction(Run button) -> Justification(Provides immediate, clear feedback on data types) -> Method(JS DOM manipulation).
+        2. Operators: Goal(Compare/Explore) -> Live Input Fields -> Interaction(Real-time updates on input change) -> Justification(Effectively demonstrates cause-and-effect of different operators and values) -> Method(JS event listeners).
+        3. String Formatting: Goal(Inform/Practice) -> Static Code/Output -> Interaction(Run button) -> Justification(Clearly demonstrates various string formatting techniques as requested) -> Method(JS DOM manipulation).
+        4. Conditionals: Goal(Understand Logic) -> Score Input -> Interaction(Live highlighting of the executed code path) -> Justification(Visually connects a condition to its outcome, making abstract logic tangible) -> Method(JS class manipulation).
+        5. Loops: Goal(Visualize Change) -> "Run" Button with Animation -> Interaction(Step-by-step output display) -> Justification(Clearly illustrates the iterative process of loops, which can be hard to grasp from static text) -> Method(JS setTimeout for animation).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .code-block {
+            background-color: #1E293B;
+            color: #E2E8F0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'D2Coding', monospace, Consolas, 'Courier New', monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+        }
+        .output-block {
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-height: 80px;
+            font-family: 'D2Coding', monospace, Consolas, 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active {
+            background-color: #14B8A6;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .highlight {
+            background-color: rgba(20, 184, 166, 0.2);
+            border-left: 3px solid #14B8A6;
+            padding-left: 8px;
+            margin-left: -11px;
+            transition: all 0.3s ease;
+            display: block;
+            border-radius: 2px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-teal-600">파이썬 기초 대화형 복습</h1>
+            <p class="text-slate-600 mt-2">각 주제를 클릭하여 대화형 예제를 통해 파이썬 기초를 복습해 보세요.</p>
+        </header>
+
+        <nav id="navigation" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+            <button data-target="variables" class="nav-btn active w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">1. 변수와 자료형</button>
+            <button data-target="operators" class="nav-btn w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">2. 연산자</button>
+            <button data-target="conditionals" class="nav-btn w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">3. 조건문</button>
+            <button data-target="loops" class="nav-btn w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">4. 반복문</button>
+        </nav>
+
+        <main id="content-container">
+            <section id="variables" class="content-section space-y-6 fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-2">1. 변수와 자료형 (Variables & Data Types)</h2>
+                    <p class="text-slate-600 mb-4">파이썬은 데이터를 저장하기 위해 변수를 사용하며, 각 데이터는 고유한 자료형(타입)을 가집니다. 아래 '코드 실행' 버튼을 눌러 각 변수에 어떤 자료형이 할당되었는지 확인해 보세요.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="code-block">a = 10
+b = 3.14
+c = "파이썬"
+d = True
+
+print(f"변수 a의 타입: {type(a)}")
+print(f"변수 b의 타입: {type(b)}")
+print(f"변수 c의 타입: {type(c)}")
+print(f"변수 d의 타입: {type(d)}")</div>
+                        <div class="flex flex-col">
+                            <div id="variables-output" class="output-block flex-grow"></div>
+                            <button onclick="runVariables()" class="mt-4 w-full bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition">코드 실행</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="operators" class="content-section hidden space-y-6 fade-in">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-2">2. 연산자 (Operators)</h2>
+                    <p class="text-slate-600 mb-4">연산자는 데이터로 계산, 비교, 논리 판단 등 다양한 작업을 수행합니다. 아래 입력 상자의 숫자를 변경하여 결과가 어떻게 실시간으로 바뀌는지 확인해 보세요.</p>
+                    <div class="flex gap-4 mb-4">
+                        <div class="flex-1">
+                            <label for="opX" class="font-semibold">x =</label>
+                            <input type="number" id="opX" value="10" class="w-full mt-1 p-2 border rounded-md">
+                        </div>
+                        <div class="flex-1">
+                            <label for="opY" class="font-semibold">y =</label>
+                            <input type="number" id="opY" value="3" class="w-full mt-1 p-2 border rounded-md">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-bold text-lg mb-2 text-teal-700">산술 연산자</h3>
+                            <div class="output-block space-y-1">
+                                <p>덧셈 (x + y): <span id="add-result" class="font-bold"></span></p>
+                                <p>뺄셈 (x - y): <span id="sub-result" class="font-bold"></span></p>
+                                <p>곱셈 (x * y): <span id="mul-result" class="font-bold"></span></p>
+                                <p>나눗셈 (x / y): <span id="div-result" class="font-bold"></span></p>
+                                <p>몫 (x // y): <span id="floordiv-result" class="font-bold"></span></p>
+                                <p>나머지 (x % y): <span id="mod-result" class="font-bold"></span></p>
+                                <p>제곱 (x ** y): <span id="pow-result" class="font-bold"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2 text-teal-700">비교/논리 연산자</h3>
+                            <div class="output-block space-y-1">
+                                <p>x > y: <span id="gt-result" class="font-bold"></span></p>
+                                <p>x == y: <span id="eq-result" class="font-bold"></span></p>
+                                <p>True and False: <span id="and-result" class="font-bold"></span></p>
+                                <p>True or False: <span id="or-result" class="font-bold"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-lg mb-2 text-teal-700">문자열 포매팅 (String Formatting)</h3>
+                    <p class="text-slate-600 mb-4">변수 값을 문자열에 삽입하는 다양한 방법을 알아봅니다. '실행' 버튼을 눌러 결과를 확인하세요.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="code-block">name = "파이썬"
+age = 30
+pi = 3.1415926535
+
+# f-string (가장 현대적이고 권장되는 방식)
+print(f"{name}의 나이는 {age}살입니다.")
+
+# .format() 메소드
+print("원주율: {:.3f}".format(pi))</div>
+                        <div class="flex flex-col">
+                            <div id="formatting-output" class="output-block flex-grow"></div>
+                            <button onclick="runFormatting()" class="mt-4 w-full bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition">실행</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conditionals" class="content-section hidden space-y-6 fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-2">3. 조건문 (If-elif-else)</h2>
+                    <p class="text-slate-600 mb-4">조건문은 특정 조건이 참(True)일 때만 코드 블록을 실행합니다. 점수를 입력하고 '결과 확인' 버튼을 눌러 어떤 학점 메시지가 출력되는지, 그리고 코드의 어느 부분이 실행되는지(하이라이트) 확인해 보세요.</p>
+                     <div class="mb-4">
+                        <label for="score" class="font-semibold">점수 입력:</label>
+                        <input type="number" id="score" value="85" class="w-full mt-1 p-2 border rounded-md" min="0" max="100">
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="code-block">score = <span id="score-display" class="text-yellow-300 font-bold">85</span>
+<span id="if-line-1">if score >= 90:</span>
+<span id="if-line-2">    print("A 학점입니다.")</span>
+<span id="if-line-3">elif score >= 80:</span>
+<span id="if-line-4">    print("B 학점입니다.")</span>
+<span id="if-line-5">elif score >= 70:</span>
+<span id="if-line-6">    print("C 학점입니다.")</span>
+<span id="if-line-7">else:</span>
+<span id="if-line-8">    print("F 학점입니다.")</span></div>
+                        <div class="flex flex-col">
+                            <div id="conditionals-output" class="output-block flex-grow"></div>
+                            <button onclick="runConditionals()" class="mt-4 w-full bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition">결과 확인</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="loops" class="content-section hidden space-y-6 fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-2">4. 반복문 (For, While)</h2>
+                    <p class="text-slate-600 mb-4">반복문은 특정 작업을 여러 번 수행할 때 사용됩니다. '반복 실행' 버튼을 눌러 코드가 한 줄씩 실행되며 결과가 출력되는 과정을 시각적으로 확인해 보세요.</p>
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="border p-4 rounded-lg bg-slate-50">
+                            <h3 class="font-bold text-lg mb-2 text-teal-700">For 반복문 (리스트 순회)</h3>
+                            <div class="code-block">fruits = ["사과", "바나나", "체리"]
+for fruit in fruits:
+    print(f"'{fruit}' 맛있어요!")</div>
+                            <div class="output-block mt-4" id="for-loop-output"></div>
+                            <button onclick="runForLoop()" class="mt-4 w-full bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition">반복 실행</button>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-slate-50">
+                             <h3 class="font-bold text-lg mb-2 text-teal-700">While 반복문</h3>
+                            <div class="code-block">count = 0
+while count < 3:
+    print(f"현재 카운트: {count}")
+    count += 1</div>
+                            <div class="output-block mt-4" id="while-loop-output"></div>
+                            <button onclick="runWhileLoop()" class="mt-4 w-full bg-teal-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-600 transition">반복 실행</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const targetId = button.getAttribute('data-target');
+                
+                contentSections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        function runVariables() {
+            const output = document.getElementById('variables-output');
+            output.innerHTML = `변수 a의 타입: &lt;class 'int'&gt;<br>변수 b의 타입: &lt;class 'float'&gt;<br>변수 c의 타입: &lt;class 'str'&gt;<br>변수 d의 타입: &lt;class 'bool'&gt;`;
+        }
+        
+        function runFormatting() {
+            const output = document.getElementById('formatting-output');
+            const pi = 3.1415926535;
+            output.innerHTML = `파이썬의 나이는 30살입니다.<br>원주율: ${pi.toFixed(3)}`;
+        }
+
+        const opX = document.getElementById('opX');
+        const opY = document.getElementById('opY');
+
+        function updateOperators() {
+            const x = parseFloat(opX.value) || 0;
+            const y = parseFloat(opY.value) || 0;
+
+            document.getElementById('add-result').textContent = x + y;
+            document.getElementById('sub-result').textContent = x - y;
+            document.getElementById('mul-result').textContent = x * y;
+            document.getElementById('div-result').textContent = y !== 0 ? (x / y).toFixed(2) : '0으로 나눌 수 없음';
+            document.getElementById('floordiv-result').textContent = y !== 0 ? Math.floor(x / y) : '0으로 나눌 수 없음';
+            document.getElementById('mod-result').textContent = y !== 0 ? x % y : '0으로 나눌 수 없음';
+            document.getElementById('pow-result').textContent = (x ** y).toExponential(2);
+
+            document.getElementById('gt-result').textContent = x > y;
+            document.getElementById('eq-result').textContent = x == y;
+            document.getElementById('and-result').textContent = true && false;
+            document.getElementById('or-result').textContent = true || false;
+        }
+
+        opX.addEventListener('input', updateOperators);
+        opY.addEventListener('input', updateOperators);
+        
+        const scoreInput = document.getElementById('score');
+        const scoreDisplay = document.getElementById('score-display');
+        const conditionalsOutput = document.getElementById('conditionals-output');
+        const ifLines = Array.from({length: 8}, (_, i) => document.getElementById(`if-line-${i+1}`));
+
+        function runConditionals() {
+            const score = parseInt(scoreInput.value) || 0;
+            scoreDisplay.textContent = score;
+
+            ifLines.forEach(line => line.classList.remove('highlight'));
+
+            let outputText = '';
+            if (score >= 90) {
+                outputText = 'A 학점입니다.';
+                ifLines[0].classList.add('highlight');
+                ifLines[1].classList.add('highlight');
+            } else if (score >= 80) {
+                outputText = 'B 학점입니다.';
+                ifLines[2].classList.add('highlight');
+                ifLines[3].classList.add('highlight');
+            } else if (score >= 70) {
+                outputText = 'C 학점입니다.';
+                ifLines[4].classList.add('highlight');
+                ifLines[5].classList.add('highlight');
+            } else {
+                outputText = 'F 학점입니다.';
+                ifLines[6].classList.add('highlight');
+                ifLines[7].classList.add('highlight');
+            }
+            conditionalsOutput.textContent = outputText;
+        }
+
+        scoreInput.addEventListener('input', () => {
+             conditionalsOutput.textContent = '';
+             ifLines.forEach(line => line.classList.remove('highlight'));
+             scoreDisplay.textContent = scoreInput.value;
+        });
+        
+        function typeEffect(element, lines, interval, button) {
+            if (button.disabled) return;
+            button.disabled = true;
+            element.innerHTML = '';
+            let lineIndex = 0;
+            
+            const intervalId = setInterval(() => {
+                if (lineIndex < lines.length) {
+                    const p = document.createElement('p');
+                    p.textContent = lines[lineIndex];
+                    p.classList.add('fade-in');
+                    element.appendChild(p);
+                    lineIndex++;
+                } else {
+                    clearInterval(intervalId);
+                    button.disabled = false;
+                }
+            }, interval);
+        }
+
+        function runForLoop() {
+            const button = event.target;
+            const output = document.getElementById('for-loop-output');
+            const lines = ["'사과' 맛있어요!", "'바나나' 맛있어요!", "'체리' 맛있어요!"];
+            typeEffect(output, lines, 500, button);
+        }
+
+        function runWhileLoop() {
+            const button = event.target;
+            const output = document.getElementById('while-loop-output');
+            const lines = ["현재 카운트: 0", "현재 카운트: 1", "현재 카운트: 2"];
+            typeEffect(output, lines, 500, button);
+        }
+
+        window.onload = () => {
+            updateOperators();
+        };
+    </script>
+</body>
+</html>
