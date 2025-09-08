@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자료구조 인터랙티브 학습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A tab-based single-page application is chosen for focused learning. Users can select a data structure (List, Tuple, Dictionary, Set) from the top navigation. The main view presents an interactive panel for the selected structure, allowing users to click buttons to trigger operations (e.g., create, add, modify). This step-by-step, interactive approach is more engaging and effective for understanding code execution and data structure states than passively reading static text. It transforms a document into a hands-on learning tool. -->
+    <!-- Visualization & Content Choices: Instead of charts, the application uses dynamic HTML blocks to visualize the state of data structures. Report Info: List operations -> Goal: Demonstrate mutability -> Viz: Interactive HTML list that changes on button clicks -> Interaction: User clicks 'Add' or 'Modify' buttons to see the list update in real-time. Justification: This provides immediate visual feedback on the code's effect. This pattern is repeated for all data structures, including showing errors (Tuple modification) and set operations, making abstract concepts tangible. NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-btn.active { border-color: #f59e0b; color: #f59e0b; background-color: #fffbeb; }
+        .code-block { background-color: #1f2937; color: #d1d5db; font-family: 'Courier New', Courier, monospace; }
+        .output-block { background-color: #f3f4f6; border-left: 4px solid #f59e0b; }
+        .operation-btn { transition: background-color 0.2s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">파이썬 자료구조 핵심 요약</h1>
+            <p class="mt-2 text-lg text-gray-600">직접 클릭하며 파이썬 자료구조를 체험해보세요!</p>
+        </header>
+
+        <nav class="flex justify-center border-b-2 border-gray-200 mb-8 space-x-2 md:space-x-4">
+            <button class="tab-btn active text-sm md:text-base font-semibold py-3 px-4 md:px-6 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-500" data-tab="list">리스트 (List)</button>
+            <button class="tab-btn text-sm md:text-base font-semibold py-3 px-4 md:px-6 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-500" data-tab="tuple">튜플 (Tuple)</button>
+            <button class="tab-btn text-sm md:text-base font-semibold py-3 px-4 md:px-6 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-500" data-tab="dictionary">딕셔너리 (Dictionary)</button>
+            <button class="tab-btn text-sm md:text-base font-semibold py-3 px-4 md:px-6 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-500" data-tab="set">세트 (Set)</button>
+        </nav>
+
+        <main id="content-area">
+            <!-- List Section -->
+            <div id="list-content" class="tab-content bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-2">1. 리스트 (List)</h2>
+                <p class="mb-6 text-gray-600">순서가 있고 값을 수정할 수 있는(mutable) 자료구조입니다. 다양한 타입의 데이터를 담을 수 있습니다.</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행할 작업 선택:</h3>
+                        <div id="list-operations" class="flex flex-wrap gap-2">
+                            <button data-op="create" class="operation-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-md">1. 생성</button>
+                            <button data-op="append" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">2. 요소 추가</button>
+                            <button data-op="modify" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">3. 요소 수정</button>
+                            <button data-op="access" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">4. 요소 접근</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행 코드:</h3>
+                        <pre class="code-block p-4 rounded-md text-sm"><code id="list-code"># 버튼을 클릭하여 코드를 확인하세요.</code></pre>
+                        <h3 class="font-semibold mt-4 mb-3 text-lg">실행 결과:</h3>
+                        <div id="list-output" class="output-block p-4 rounded-md min-h-[50px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tuple Section -->
+            <div id="tuple-content" class="tab-content hidden bg-white p-6 rounded-lg shadow-md">
+                 <h2 class="text-2xl font-bold mb-2">2. 튜플 (Tuple)</h2>
+                <p class="mb-6 text-gray-600">순서가 있지만 한번 생성되면 값을 수정할 수 없는(immutable) 자료구조입니다. '읽기 전용' 데이터에 사용됩니다.</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행할 작업 선택:</h3>
+                        <div id="tuple-operations" class="flex flex-wrap gap-2">
+                            <button data-op="create" class="operation-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-md">1. 생성</button>
+                            <button data-op="access" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">2. 요소 접근</button>
+                            <button data-op="modify-fail" class="operation-btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md">3. 수정 시도 (오류)</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행 코드:</h3>
+                        <pre class="code-block p-4 rounded-md text-sm"><code id="tuple-code"># 버튼을 클릭하여 코드를 확인하세요.</code></pre>
+                        <h3 class="font-semibold mt-4 mb-3 text-lg">실행 결과:</h3>
+                        <div id="tuple-output" class="output-block p-4 rounded-md min-h-[50px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dictionary Section -->
+            <div id="dictionary-content" class="tab-content hidden bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-2">3. 딕셔너리 (Dictionary)</h2>
+                <p class="mb-6 text-gray-600">'키(Key)'와 '값(Value)'을 쌍으로 저장하는 자료구조입니다. 순서가 없으며, 키를 통해 값에 빠르게 접근할 수 있습니다.</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                     <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행할 작업 선택:</h3>
+                        <div id="dict-operations" class="flex flex-wrap gap-2">
+                             <button data-op="create" class="operation-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-md">1. 생성</button>
+                             <button data-op="add" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">2. 요소 추가</button>
+                             <button data-op="modify" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">3. 요소 수정</button>
+                             <button data-op="access" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">4. 요소 접근</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행 코드:</h3>
+                        <pre class="code-block p-4 rounded-md text-sm"><code id="dict-code"># 버튼을 클릭하여 코드를 확인하세요.</code></pre>
+                        <h3 class="font-semibold mt-4 mb-3 text-lg">실행 결과:</h3>
+                        <div id="dict-output" class="output-block p-4 rounded-md min-h-[50px]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Set Section -->
+            <div id="set-content" class="tab-content hidden bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-2">4. 세트 (Set)</h2>
+                <p class="mb-6 text-gray-600">순서가 없고, 중복된 값을 허용하지 않는 자료구조입니다. 주로 데이터의 중복 제거 또는 집합 연산에 사용됩니다.</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행할 작업 선택:</h3>
+                        <div id="set-operations" class="flex flex-wrap gap-2">
+                            <button data-op="create" class="operation-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-md">1. 생성 (중복 제거)</button>
+                            <button data-op="add" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">2. 요소 추가</button>
+                            <button data-op="remove" class="operation-btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md">3. 요소 삭제</button>
+                            <button data-op="union" class="operation-btn bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md">4. 합집합</button>
+                            <button data-op="intersection" class="operation-btn bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md">5. 교집합</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-3 text-lg">실행 코드:</h3>
+                        <pre class="code-block p-4 rounded-md text-sm"><code id="set-code"># 버튼을 클릭하여 코드를 확인하세요.</code></pre>
+                        <h3 class="font-semibold mt-4 mb-3 text-lg">실행 결과:</h3>
+                        <div id="set-output" class="output-block p-4 rounded-md min-h-[50px]"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                contents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${tab.dataset.tab}-content`).classList.remove('hidden');
+            });
+        });
+
+        // List Logic
+        let myList = [];
+        const listCodeEl = document.getElementById('list-code');
+        const listOutputEl = document.getElementById('list-output');
+        document.getElementById('list-operations').addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+            const op = e.target.dataset.op;
+            let code = '';
+            let output = '';
+
+            switch (op) {
+                case 'create':
+                    myList = [1, '사과', 3, 4];
+                    code = `my_list = [1, '사과', 3, 4]\nprint(my_list)`;
+                    output = `[${myList.map(i => typeof i === 'string' ? `'${i}'` : i).join(', ')}]`;
+                    break;
+                case 'append':
+                    myList.push('바나나');
+                    code = `my_list.append('바나나')\nprint(my_list)`;
+                    output = `[${myList.map(i => typeof i === 'string' ? `'${i}'` : i).join(', ')}]`;
+                    break;
+                case 'modify':
+                    myList[1] = '배';
+                    code = `my_list[1] = '배'\nprint(my_list)`;
+                    output = `[${myList.map(i => typeof i === 'string' ? `'${i}'` : i).join(', ')}]`;
+                    break;
+                case 'access':
+                    code = `print(f"첫 번째: {my_list[0]}")\nprint(f"마지막: {my_list[-1]}")`;
+                    output = `첫 번째: ${myList[0]}\n마지막: ${myList[myList.length - 1]}`;
+                    break;
+            }
+            listCodeEl.textContent = code;
+            listOutputEl.textContent = output;
+        });
+        
+        // Tuple Logic
+        let myTuple = [];
+        const tupleCodeEl = document.getElementById('tuple-code');
+        const tupleOutputEl = document.getElementById('tuple-output');
+        document.getElementById('tuple-operations').addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+            const op = e.target.dataset.op;
+            let code = '';
+            let output = '';
+
+            switch(op) {
+                case 'create':
+                    myTuple = [1, '사과', 3, 4];
+                    code = `my_tuple = (1, '사과', 3, 4)\nprint(my_tuple)`;
+                    output = `(${myTuple.map(i => typeof i === 'string' ? `'${i}'` : i).join(', ')})`;
+                    break;
+                case 'access':
+                    code = `print(f"첫 번째 요소: {my_tuple[0]}")`;
+                    output = `첫 번째 요소: ${myTuple[0]}`;
+                    break;
+                case 'modify-fail':
+                    code = `my_tuple[1] = '배'`;
+                    output = `오류 발생: TypeError: 'tuple' object does not support item assignment`;
+                    break;
+            }
+            tupleCodeEl.textContent = code;
+            tupleOutputEl.textContent = output;
+        });
+
+        // Dictionary Logic
+        let myDict = {};
+        const dictCodeEl = document.getElementById('dict-code');
+        const dictOutputEl = document.getElementById('dict-output');
+        document.getElementById('dict-operations').addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+            const op = e.target.dataset.op;
+            let code = '';
+            let output = '';
+
+            const formatDict = (obj) => `{${Object.entries(obj).map(([k, v]) => `'${k}': ${typeof v === 'string' ? `'${v}'` : v}`).join(', ')}}`;
+
+            switch(op) {
+                case 'create':
+                    myDict = {'이름': '김코랩', '나이': 20};
+                    code = `my_dict = {'이름': '김코랩', '나이': 20}\nprint(my_dict)`;
+                    output = formatDict(myDict);
+                    break;
+                case 'add':
+                    myDict['도시'] = '서울';
+                    code = `my_dict['도시'] = '서울'\nprint(my_dict)`;
+                    output = formatDict(myDict);
+                    break;
+                case 'modify':
+                    myDict['나이'] = 21;
+                    code = `my_dict['나이'] = 21\nprint(my_dict)`;
+                    output = formatDict(myDict);
+                    break;
+                case 'access':
+                    code = `print(f"이름: {my_dict['이름']}")`;
+                    output = `이름: ${myDict['이름']}`;
+                    break;
+            }
+            dictCodeEl.textContent = code;
+            dictOutputEl.textContent = output;
+        });
+        
+        // Set Logic
+        let mySet = new Set();
+        const setCodeEl = document.getElementById('set-code');
+        const setOutputEl = document.getElementById('set-output');
+        document.getElementById('set-operations').addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+            const op = e.target.dataset.op;
+            let code = '';
+            let output = '';
+            
+            const formatSet = (s) => `{${[...s].join(', ')}}`;
+
+            switch(op) {
+                case 'create':
+                    mySet = new Set([1, 2, 3, 3, 2, 1]);
+                    code = `my_set = {1, 2, 3, 3, 2, 1}\nprint(my_set)`;
+                    output = formatSet(mySet);
+                    break;
+                case 'add':
+                    mySet.add(4);
+                    code = `my_set.add(4)\nprint(my_set)`;
+                    output = formatSet(mySet);
+                    break;
+                case 'remove':
+                    mySet.delete(2);
+                    code = `my_set.remove(2)\nprint(my_set)`;
+                    output = formatSet(mySet);
+                    break;
+                case 'union':
+                    let set2 = new Set([3, 4, 5]);
+                    let unionSet = new Set([...mySet, ...set2]);
+                    code = `set1 = ${formatSet(mySet)}\nset2 = {3, 4, 5}\nprint(set1.union(set2))`;
+                    output = formatSet(unionSet);
+                    break;
+                case 'intersection':
+                    let set3 = new Set([3, 4, 5]);
+                    let intersectionSet = new Set([...mySet].filter(x => set3.has(x)));
+                    code = `set1 = ${formatSet(mySet)}\nset2 = {3, 4, 5}\nprint(set1.intersection(set2))`;
+                    output = formatSet(intersectionSet);
+                    break;
+            }
+            setCodeEl.textContent = code;
+            setOutputEl.textContent = output;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대화형 Colab 시작 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: 이 애플리케이션은 원본 가이드의 5단계 구조를 따르면서 각 단계를 대화형 섹션으로 재구성했습니다. 사용자가 순차적으로 학습하거나 상단 네비게이션을 통해 원하는 부분으로 바로 이동할 수 있습니다. '코드 셀 체험'과 '텍스트 셀 꾸미기' 섹션에 시뮬레이션 환경을 구축하여, 정적 설명을 넘어 사용자가 직접 조작하고 즉각적인 피드백을 받으며 학습 효과를 극대화하도록 설계했습니다. 이러한 체험 중심의 구조는 초보자가 Colab 환경에 대한 두려움을 없애고 자신감을 얻도록 돕기 위해 선택되었습니다. -->
+    <!-- Visualization & Content Choices: 
+        - Colab 인터페이스(1-2단계): Goal(정보 전달) -> Method(HTML/CSS로 구현한 다이어그램) -> Interaction(주요 부분 하이라이트). 시각적 이해를 돕기 위해 실제 UI와 유사한 구조를 HTML로 구현했습니다.
+        - 코드 셀 사용법(3단계): Goal(체험/학습) -> Method(JavaScript 기반의 코드 셀 시뮬레이터) -> Interaction(실행 버튼 클릭 시 결과 출력). 사용자가 '실행'의 개념을 직접 체험하게 하여 학습 효과를 높입니다.
+        - 텍스트 셀 사용법(4단계): Goal(체험/학습) -> Method(실시간 마크다운 편집기) -> Interaction(텍스트 입력 시 실시간 미리보기 업데이트). 마크다운 문법의 작동 방식을 직관적으로 이해시킵니다.
+        - 파일 관리(5단계): Goal(정보 전달) -> Method(아이콘과 텍스트를 결합한 목록) -> Interaction(없음). 명확하고 간결한 정보 전달에 집중했습니다.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active {
+            color: #4f46e5;
+            border-bottom-color: #4f46e5;
+        }
+        .code-cell-output {
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-indigo-600">대화형 Colab 가이드</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#step1" class="nav-link text-gray-600 hover:text-indigo-600 border-b-2 border-transparent pb-1">시작하기</a>
+                <a href="#step2" class="nav-link text-gray-600 hover:text-indigo-600 border-b-2 border-transparent pb-1">코드 셀 체험</a>
+                <a href="#step3" class="nav-link text-gray-600 hover:text-indigo-600 border-b-2 border-transparent pb-1">텍스트 셀 꾸미기</a>
+                <a href="#step4" class="nav-link text-gray-600 hover:text-indigo-600 border-b-2 border-transparent pb-1">파일 관리</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-4">Google Colab 첫걸음</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                웹 브라우저에서 바로 Python 코드를 작성하고 실행할 수 있는 Google Colab의 세계에 오신 것을 환영합니다. 이 가이드를 통해 코랩의 핵심 기능을 쉽고 재미있게 배워보세요.
+            </p>
+        </div>
+
+        <section id="step1" class="mb-16 p-8 bg-white rounded-xl shadow-lg">
+            <h3 class="text-2xl font-bold mb-2 text-indigo-700">1단계: Colab 접속 및 인터페이스 둘러보기</h3>
+            <p class="text-gray-600 mb-6">
+                Colab은 '셀(Cell)'이라는 블록으로 구성됩니다. 코드를 작성하는 '코드 셀'과 설명을 위한 '텍스트 셀'이 있습니다. 아래는 Colab의 기본적인 인터페이스 모습입니다.
+            </p>
+            <div class="bg-gray-100 border border-gray-200 rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <span class="text-sm font-semibold text-gray-500 mr-4">File.ipynb</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center group">
+                        <div class="text-gray-500 font-mono text-sm mr-2">[ ]</div>
+                        <div class="flex-1 p-3 bg-white rounded-md border-2 border-transparent ring-2 ring-indigo-500 shadow">
+                            <span class="font-mono text-blue-800"># 이곳이 코드를 작성하는 '코드 셀'입니다.</span>
+                        </div>
+                    </div>
+                    <div class="w-full text-center text-sm text-gray-400 my-2">▼ +코드 &nbsp; &nbsp; ▲ +텍스트</div>
+                    <div class="flex-1 p-3 bg-white rounded-md border-2 border-transparent ring-2 ring-amber-500 shadow">
+                        <p>이곳은 설명을 작성하는 '텍스트 셀'입니다.</p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-6 text-sm text-gray-500">
+                <p><strong>접속 방법:</strong> 웹 브라우저에서 <a href="https://colab.research.google.com/" target="_blank" class="text-indigo-600 hover:underline font-semibold">colab.research.google.com</a>에 접속하여 '새 노트북'을 클릭하면 위와 같은 환경이 나타납니다.</p>
+            </div>
+        </section>
+
+        <section id="step2" class="mb-16 p-8 bg-white rounded-xl shadow-lg">
+            <h3 class="text-2xl font-bold mb-2 text-indigo-700">2단계: 코드 셀 체험하기</h3>
+            <p class="text-gray-600 mb-6">
+                코드 셀에 Python 코드를 입력하고 실행 버튼(▶)을 눌러 결과를 확인해 보세요. 아래의 코드 셀은 실제 Colab처럼 동작하는 시뮬레이션입니다.
+            </p>
+            <div class="bg-gray-100 border border-gray-200 rounded-lg p-4">
+                <div class="flex items-start bg-white p-2 rounded-md shadow-inner">
+                    <button id="run-button" class="mt-1 mr-3 text-2xl text-gray-400 hover:text-green-500 transition-colors">▶</button>
+                    <div class="flex-1">
+                        <pre class="bg-gray-50 p-3 rounded"><code class="language-python">print("Hello, Colab!")</code></pre>
+                        <div id="code-output" class="mt-2 text-gray-700 p-3 bg-gray-50 rounded opacity-0 h-0 overflow-hidden"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 text-sm text-gray-500">
+                <p><strong>팁:</strong> 실제 Colab 환경에서는 `Shift + Enter` 키를 눌러 코드를 더 빠르게 실행할 수 있습니다.</p>
+            </div>
+        </section>
+
+        <section id="step3" class="mb-16 p-8 bg-white rounded-xl shadow-lg">
+            <h3 class="text-2xl font-bold mb-2 text-indigo-700">3단계: 텍스트 셀 꾸미기 (마크다운)</h3>
+            <p class="text-gray-600 mb-6">
+                텍스트 셀에서는 마크다운 문법을 사용해 글을 꾸밀 수 있습니다. 왼쪽 편집기에 마크다운을 입력하면 오른쪽에서 실시간으로 결과가 반영됩니다.
+            </p>
+            <div class="grid md:grid-cols-2 gap-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+                <div>
+                    <h4 class="font-semibold mb-2 text-center">마크다운 편집기</h4>
+                    <textarea id="markdown-input" class="w-full h-64 p-3 font-mono text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    ># 큰 제목
+## 중간 제목
+
+여기에 글을 써보세요.
+
+- 목록 1
+- 목록 2
+
+**이 글씨는 굵게** 보입니다.
+*이 글씨는 기울어져* 보입니다.
+
+[여기를 누르면 구글로 이동합니다](https://google.com)
+</textarea>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2 text-center">실시간 미리보기</h4>
+                    <div id="markdown-preview" class="w-full h-64 p-3 bg-white border border-gray-300 rounded-md overflow-y-auto prose"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="step4" class="p-8 bg-white rounded-xl shadow-lg">
+            <h3 class="text-2xl font-bold mb-2 text-indigo-700">4단계: 파일 관리하기</h3>
+            <p class="text-gray-600 mb-6">
+                Colab은 내 컴퓨터의 파일을 업로드하거나, 작업한 파일을 다운로드할 수 있습니다. 또한 Google Drive와 연동하여 파일을 편리하게 관리할 수 있습니다.
+            </p>
+            <div class="space-y-4">
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <span class="text-2xl mr-4">📤</span>
+                    <div>
+                        <h4 class="font-semibold">파일 업로드</h4>
+                        <p class="text-gray-600 text-sm">왼쪽 사이드바의 파일 탭(📁)에서 '세션 저장소에 업로드' 아이콘을 클릭하여 내 컴퓨터의 파일을 올립니다.</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <span class="text-2xl mr-4">📥</span>
+                    <div>
+                        <h4 class="font-semibold">파일 다운로드</h4>
+                        <p class="text-gray-600 text-sm">업로드된 파일 목록에서 원하는 파일의 점 세 개(...) 메뉴를 클릭하여 '다운로드'를 선택합니다.</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <span class="text-2xl mr-4">🔗</span>
+                    <div>
+                        <h4 class="font-semibold">Google Drive 연동</h4>
+                        <p class="text-gray-600 text-sm">파일 탭 상단의 '드라이브 마운트' 아이콘을 클릭하면 내 Google Drive에 바로 접근하여 파일을 사용하고 저장할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-8 border-t border-gray-200">
+        <p class="text-gray-500">이제 Colab의 기본 사용법을 익히셨습니다. 다양한 데이터 분석과 머신러닝 프로젝트에 도전해보세요!</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const runButton = document.getElementById('run-button');
+            const codeOutput = document.getElementById('code-output');
+
+            runButton.addEventListener('click', () => {
+                runButton.classList.add('text-green-500');
+                codeOutput.textContent = 'Hello, Colab!';
+                codeOutput.style.opacity = '1';
+                codeOutput.style.height = 'auto';
+
+                setTimeout(() => {
+                    runButton.classList.remove('text-green-500');
+                }, 500);
+            });
+            
+            const markdownInput = document.getElementById('markdown-input');
+            const markdownPreview = document.getElementById('markdown-preview');
+
+            function simpleMarkdownParser(text) {
+                let html = text;
+                html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                
+                html = html.replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-2">$1</h1>');
+                html = html.replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mb-2">$1</h2>');
+                html = html.replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold mb-2">$1</h3>');
+                
+                html = html.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
+                html = html.replace(/\*(.*)\*/gim, '<em>$1</em>');
+                
+                html = html.replace(/^\s*[-*] (.*)/gim, '<li class="ml-4 list-disc">$1</li>');
+                html = html.replace(/<li>/g, '<ul><li>').replace(/<\/li>\n(?!<li)/g, '</li></ul>');
+
+                html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" class="text-indigo-600 hover:underline">$1</a>');
+
+                html = html.replace(/\n/g, '<br>');
+                html = html.replace(/<br><(h[1-3]|ul|li)/g, '<$1');
+                html = html.replace(/<\/ (h[1-3]|ul|li)><br>/g, '</$1>');
+
+
+                return html;
+            }
+
+            function updatePreview() {
+                markdownPreview.innerHTML = simpleMarkdownParser(markdownInput.value);
+            }
+
+            markdownInput.addEventListener('keyup', updatePreview);
+            updatePreview();
+
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

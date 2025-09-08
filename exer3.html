@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 기초 학습 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Learning -->
+    <!-- Application Structure Plan: 이 애플리케이션은 학습 효율성을 극대화하기 위해 좌측의 고정 사이드바 네비게이션과 우측의 넓은 콘텐츠 영역으로 구성된 2단 레이아웃을 채택했습니다. 사용자는 '함수', '모듈', '파일 입출력' 주제를 사이드바를 통해 쉽게 전환하며 학습할 수 있습니다. 이러한 구조는 긴 스크롤 없이도 각 주제에 집중할 수 있게 도와주며, 정적인 코드 예제를 사용자가 직접 값을 입력하고 결과를 확인할 수 있는 '인터랙티브 코드 실행기'로 변환하여, 수동적인 학습을 능동적인 탐구 경험으로 전환하는 것을 목표로 설계되었습니다. -->
+    <!-- Visualization & Content Choices: 소스 문서가 코드와 텍스트로 구성되어 있어 전통적인 데이터 차트(Chart.js 등)는 사용하지 않았습니다. 대신, 각 파이썬 개념 자체를 시각화하고 상호작용의 대상으로 삼았습니다. 예를 들어, '함수 정의 및 호출'은 사용자가 직접 매개변수를 입력하고 버튼을 클릭하면 동적으로 결과가 출력되는 형태로 구현했습니다. 이는 코드의 작동 원리를 직관적으로 이해시키는 것을 목표로 합니다. 각 코드 블록에는 '복사하기' 기능을 추가하여 학습한 코드를 쉽게 가져다 쓸 수 있도록 편의성을 높였습니다. 모든 시각적 요소는 HTML과 Tailwind CSS를 사용하여 구현했습니다. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .code-block {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-family: 'D2Coding', 'Consolas', monospace;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .interactive-area {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .output-box {
+            background-color: #f1f3f5;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-height: 40px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            background-color: #4c6ef5;
+            color: white;
+            font-weight: 700;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #e9ecef;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: #495057;
+            color: #e9ecef;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        .code-container:hover .copy-btn {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white shadow-md flex-shrink-0">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-gray-800">Python 기초</h1>
+                <p class="text-sm text-gray-500 mt-1">대화형 복습 자료</p>
+            </div>
+            <nav class="mt-4">
+                <ul>
+                    <li><a href="#functions" class="nav-link active block py-3 px-6 text-gray-700 font-medium" data-section="functions">1. 함수 (Function)</a></li>
+                    <li><a href="#modules" class="nav-link block py-3 px-6 text-gray-700 font-medium" data-section="modules">2. 모듈 (Module)</a></li>
+                    <li><a href="#io" class="nav-link block py-3 px-6 text-gray-700 font-medium" data-section="io">3. 파일 입출력</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+            
+            <!-- Section: Functions -->
+            <section id="functions" class="content-section">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-12">
+                        <h2 class="text-4xl font-bold mb-2">1. 함수 (Function)</h2>
+                        <p class="text-lg text-gray-600">함수는 특정 기능을 수행하는 코드의 묶음입니다. 코드를 재사용하고 효율적으로 관리할 수 있게 해줍니다.</p>
+                    </div>
+
+                    <!-- 1-1. 함수 정의 및 호출 -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">1-1. 함수 정의 및 호출</h3>
+                        <p class="mb-4 text-gray-700">함수를 정의하고 호출하는 가장 기본적인 형태입니다. 아래 입력 필드에 이름을 넣고 '호출하기' 버튼을 눌러보세요.</p>
+                        <div class="relative code-container">
+                            <button class="copy-btn" onclick="copyCode('code-1-1')">복사</button>
+                            <pre id="code-1-1" class="code-block"><code>def greet(name):
+    print(f"안녕하세요, {name}님!")
+
+greet("홍길동")</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <div class="flex items-center space-x-4">
+                                <input id="greet-name" type="text" placeholder="이름을 입력하세요" class="flex-grow p-2 border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <button onclick="runGreet()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition">호출하기</button>
+                            </div>
+                            <p class="mt-4 font-semibold text-gray-600">실행 결과:</p>
+                            <div id="output-greet" class="output-box mt-2"></div>
+                        </div>
+                    </div>
+
+                    <!-- 1-2. 반환값이 있는 함수 -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">1-2. 반환값이 있는 함수</h3>
+                        <p class="mb-4 text-gray-700">함수가 어떤 값을 계산하여 돌려주는 경우입니다. 두 숫자를 입력하고 '더하기' 버튼을 눌러 결과를 확인하세요.</p>
+                        <div class="relative code-container">
+                             <button class="copy-btn" onclick="copyCode('code-1-2')">복사</button>
+                            <pre id="code-1-2" class="code-block"><code>def add(x, y):
+    return x + y
+
+result = add(5, 3)
+print(f"5 + 3 = {result}")</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <div class="flex items-center space-x-4">
+                                <input id="add-x" type="number" value="5" class="w-1/3 p-2 border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <span class="text-xl font-bold">+</span>
+                                <input id="add-y" type="number" value="3" class="w-1/3 p-2 border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <button onclick="runAdd()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition">더하기</button>
+                            </div>
+                             <p class="mt-4 font-semibold text-gray-600">실행 결과:</p>
+                            <div id="output-add" class="output-box mt-2"></div>
+                        </div>
+                    </div>
+                     <!-- 1-3. 기본 매개변수 -->
+                     <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">1-3. 기본 매개변수</h3>
+                        <p class="mb-4 text-gray-700">매개변수에 기본값을 지정해, 값을 전달하지 않아도 오류가 발생하지 않게 합니다. 이름과 나이(선택)를 입력해보세요.</p>
+                        <div class="relative code-container">
+                            <button class="copy-btn" onclick="copyCode('code-1-3')">복사</button>
+                            <pre id="code-1-3" class="code-block"><code>def show_info(name, age=0):
+    print(f"이름: {name}, 나이: {age}")
+
+show_info("영희")
+show_info("민수", 25)</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <div class="flex items-center space-x-4">
+                                <input id="info-name" type="text" placeholder="이름" class="flex-grow p-2 border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <input id="info-age" type="number" placeholder="나이 (선택)" class="w-1/3 p-2 border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                                <button onclick="runShowInfo()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition">정보 표시</button>
+                            </div>
+                            <p class="mt-4 font-semibold text-gray-600">실행 결과:</p>
+                            <div id="output-info" class="output-box mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Modules -->
+            <section id="modules" class="content-section hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-12">
+                        <h2 class="text-4xl font-bold mb-2">2. 모듈 (Module)</h2>
+                        <p class="text-lg text-gray-600">모듈은 파이썬 코드가 저장된 파일입니다. 다른 사람이 만든 유용한 기능을 가져와 사용할 수 있습니다.</p>
+                    </div>
+
+                    <!-- 2-1. 모듈 가져오기 -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">2-1. 모듈 가져오기</h3>
+                        <p class="mb-4 text-gray-700">다양한 모듈을 가져와 내장된 기능을 사용할 수 있습니다. 아래 버튼을 눌러 각 모듈의 기능을 실행해보세요.</p>
+                         <div class="relative code-container">
+                             <button class="copy-btn" onclick="copyCode('code-2-1')">복사</button>
+                            <pre id="code-2-1" class="code-block"><code># 'math' 모듈을 통째로 가져와서 사용합니다.
+import math
+print(f"파이 값: {math.pi}")
+
+# 'random' 모듈에 별칭을 부여하여 사용합니다.
+import random as r
+print(f"랜덤 정수 (1 ~ 10): {r.randint(1, 10)}")
+
+# 'datetime' 모듈에서 'datetime' 클래스만 가져옵니다.
+from datetime import datetime
+print(f"현재 시간: {datetime.now()}")</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-4 border rounded-lg">
+                                    <p class="font-bold">math.pi</p>
+                                    <p class="text-sm text-gray-600">원주율 값을 출력합니다.</p>
+                                    <button onclick="runMath()" class="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition w-full">실행</button>
+                                    <p class="mt-2 text-xs font-semibold text-gray-600">결과:</p>
+                                    <div id="output-math" class="output-box mt-1 text-sm"></div>
+                                </div>
+                                <div class="p-4 border rounded-lg">
+                                    <p class="font-bold">random.randint(1, 10)</p>
+                                    <p class="text-sm text-gray-600">1에서 10 사이의 임의의 정수를 생성합니다.</p>
+                                    <button onclick="runRandom()" class="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition w-full">실행</button>
+                                    <p class="mt-2 text-xs font-semibold text-gray-600">결과:</p>
+                                    <div id="output-random" class="output-box mt-1 text-sm"></div>
+                                </div>
+                                <div class="p-4 border rounded-lg col-span-1 md:col-span-2">
+                                    <p class="font-bold">datetime.now()</p>
+                                    <p class="text-sm text-gray-600">현재 날짜와 시간을 출력합니다.</p>
+                                    <button onclick="runDatetime()" class="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition w-full">실행</button>
+                                    <p class="mt-2 text-xs font-semibold text-gray-600">결과:</p>
+                                    <div id="output-datetime" class="output-box mt-1 text-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: File I/O -->
+            <section id="io" class="content-section hidden">
+                <div class="max-w-4xl mx-auto">
+                     <div class="mb-12">
+                        <h2 class="text-4xl font-bold mb-2">3. 파일 입출력</h2>
+                        <p class="text-lg text-gray-600">파이썬으로 파일을 읽거나 쓸 수 있습니다. 이 예제에서는 브라우저 내에서 파일 입출력을 시뮬레이션합니다.</p>
+                    </div>
+
+                     <!-- 3-1. 파일 쓰기 -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">3-1. 파일 쓰기</h3>
+                        <p class="mb-4 text-gray-700">텍스트 에어리어에 내용을 입력하고 '파일 쓰기' 버튼을 누르면 가상의 'my_file.txt'에 내용이 저장됩니다.</p>
+                        <div class="relative code-container">
+                            <button class="copy-btn" onclick="copyCode('code-3-1')">복사</button>
+                            <pre id="code-3-1" class="code-block"><code>with open("my_file.txt", "w", encoding="utf-8") as f:
+    f.write("안녕하세요, 파일 입출력입니다.\\n두 번째 줄입니다.")
+
+print("my_file.txt 파일이 생성되었습니다.")</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <textarea id="file-content-input" class="w-full p-2 border rounded-md h-24 focus:ring-2 focus:ring-purple-400 focus:outline-none" placeholder="파일에 쓸 내용을 입력하세요..."></textarea>
+                            <button onclick="runFileWrite()" class="mt-2 bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-md transition w-full">파일 쓰기 (w 모드)</button>
+                             <p class="mt-4 font-semibold text-gray-600">실행 결과:</p>
+                            <div id="output-write" class="output-box mt-2"></div>
+                        </div>
+                    </div>
+
+                     <!-- 3-2. 파일 읽기 -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-semibold mb-4">3-2. 파일 읽기</h3>
+                        <p class="mb-4 text-gray-700">'파일 읽기' 버튼을 누르면 위에서 저장한 가상 파일의 내용을 불러옵니다.</p>
+                        <div class="relative code-container">
+                            <button class="copy-btn" onclick="copyCode('code-3-2')">복사</button>
+                            <pre id="code-3-2" class="code-block"><code>with open("my_file.txt", "r", encoding="utf-8") as f:
+    content = f.read()
+
+print(content)</code></pre>
+                        </div>
+                        <div class="interactive-area">
+                            <button onclick="runFileRead()" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-md transition w-full">파일 읽기 (r 모드)</button>
+                             <p class="mt-4 font-semibold text-gray-600">파일 내용:</p>
+                            <div id="output-read" class="output-box mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.content-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                sections.forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+                
+                window.location.hash = sectionId;
+            });
+        });
+        
+        // On page load, show the section corresponding to the hash or default to 'functions'
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            const defaultSection = 'functions';
+            const sectionToShow = hash || defaultSection;
+            
+            const linkToShow = document.querySelector(`.nav-link[data-section="${sectionToShow}"]`);
+            if (linkToShow) {
+                linkToShow.click();
+            }
+        });
+
+
+        // --- Interactive Code Logic ---
+
+        // 1-1. Greet
+        function runGreet() {
+            const name = document.getElementById('greet-name').value || '아무개';
+            document.getElementById('output-greet').textContent = `안녕하세요, ${name}님!`;
+        }
+
+        // 1-2. Add
+        function runAdd() {
+            const x = parseFloat(document.getElementById('add-x').value) || 0;
+            const y = parseFloat(document.getElementById('add-y').value) || 0;
+            const result = x + y;
+            document.getElementById('output-add').textContent = `${x} + ${y} = ${result}`;
+        }
+        
+        // 1-3. Show Info
+        function runShowInfo() {
+            const name = document.getElementById('info-name').value;
+            const ageInput = document.getElementById('info-age').value;
+            
+            if (!name) {
+                document.getElementById('output-info').textContent = '이름을 입력해주세요.';
+                return;
+            }
+
+            if (ageInput) {
+                const age = parseInt(ageInput, 10);
+                document.getElementById('output-info').textContent = `이름: ${name}, 나이: ${age}`;
+            } else {
+                document.getElementById('output-info').textContent = `이름: ${name}, 나이: 0`;
+            }
+        }
+
+        // 2-1. Modules
+        function runMath() {
+            document.getElementById('output-math').textContent = Math.PI;
+        }
+
+        function runRandom() {
+            document.getElementById('output-random').textContent = Math.floor(Math.random() * 10) + 1;
+        }
+
+        function runDatetime() {
+            const now = new Date();
+            document.getElementById('output-datetime').textContent = now.toLocaleString('ko-KR');
+        }
+
+        // 3. File I/O Simulation
+        let virtualFileContent = '';
+
+        function runFileWrite() {
+            virtualFileContent = document.getElementById('file-content-input').value;
+            document.getElementById('output-write').textContent = "my_file.txt 파일에 내용이 성공적으로 저장되었습니다.";
+        }
+        
+        function runFileRead() {
+            if (virtualFileContent) {
+                document.getElementById('output-read').textContent = virtualFileContent;
+            } else {
+                document.getElementById('output-read').textContent = "(파일이 비어있거나 생성되지 않았습니다.)";
+            }
+        }
+
+        // Copy to clipboard
+        function copyCode(elementId) {
+            const codeEl = document.getElementById(elementId);
+            const text = codeEl.innerText || codeEl.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const button = codeEl.previousElementSibling;
+                const originalText = button.textContent;
+                button.textContent = '복사 완료!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
