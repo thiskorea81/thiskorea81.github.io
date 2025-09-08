@@ -1,84 +1,63 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>ThisKorea81 - 인공지능 지식 공유</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <style>
-    header {
-      background: #fff;
-      color: #000;
-      padding: 10px 0;
-      text-align: center;
-    }
-    nav {
-      background: #000; /* 밤 하늘 효과 */
-    }
-    nav ul li a {
-      color: #f0f0f0; /* 별빛처럼 밝은 글씨 */
-    }
-    sidebar {
-      position: fixed;
-      width: 200px;
-      height: 100%;
-      background: #f0f0f0;
-      padding: 20px;
-      overflow: auto;
-    }
-    footer {
-      background: #f8f9fa;
-      padding: 10px 0;
-      text-align: center;
-    }
-  </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1184357719391682"
-     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThisKorea81 - 인공지능 지식 공유</title>
+    <!-- Inter 폰트 적용 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>인공지능 지식 공유</h1>
-  </header>
+<body class="bg-gray-900 text-gray-200">
 
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="index.html">ThisKorea81</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="python.html">파이썬</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="computer_science.html">정보과학</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="computer_vision.html">컴퓨터비전</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="natural_language_processing.html">자연어처리</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="stable_diffusion.html">스테이블디퓨전</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="project.html">프로젝트</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <!-- 헤더 섹션 -->
+    <header class="bg-gray-800 text-white p-6 shadow-lg rounded-b-3xl">
+        <h1 class="text-3xl font-bold text-center">인공지능 지식 공유</h1>
+    </header>
 
-  <article class="container mt-5">
-    <!-- 이곳에 각 페이지의 내용이 들어갑니다. -->
-  </article>
+    <!-- 네비게이션 바 -->
+    <nav class="bg-gray-700 py-3 md:py-4 px-4 shadow-md rounded-b-2xl">
+        <div class="container mx-auto flex flex-wrap justify-center md:justify-start items-center space-x-2 md:space-x-4">
+            <a class="text-white text-lg font-bold hover:text-gray-300 transition-colors" href="main_website.html">ThisKorea81</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="python.html">파이썬</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="computer_science.html">정보과학</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="computer_vision.html">컴퓨터비전</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="natural_language_processing.html">자연어처리</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="stable_diffusion.html">스테이블디퓨전</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="project.html">프로젝트</a>
+            <!-- 새로 추가된 수업 파트 링크들 -->
+            <a class="text-white bg-indigo-600 hover:bg-indigo-700 font-bold py-2 px-3 rounded-full transition-colors" href="#">수업</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="colab.html">코랩 안내</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="python-exer1.html">파이썬 기초 연습1</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="python-exer2.html">파이썬 기초 연습2</a>
+            <a class="text-gray-300 hover:text-white transition-colors py-2 px-3 rounded-full hover:bg-gray-600" href="python-exer3.html">파이썬 기초 연습3</a>
+        </div>
+    </nav>
 
-  <footer>
-    <p>연락처: thiskorea@cberi.go.kr</p>
-  </footer>
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="container mx-auto p-6 md:p-10 text-gray-300">
+        <article class="bg-gray-800 rounded-2xl p-6 shadow-xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white">환영합니다!</h2>
+            <p class="text-lg leading-relaxed">
+                이곳은 인공지능에 대한 지식을 함께 나누는 공간입니다. 머신러닝, 딥러닝, 자연어 처리(NLP), 컴퓨터 비전 등 다양한 분야의 정보와 실습 예제를 제공합니다.
+                왼쪽 상단의 메뉴를 통해 각 분야별 자료를 탐색하고, 새로 추가된 '수업' 파트에서 코랩 실습 및 파이썬 기초 연습을 시작해 보세요.
+            </p>
+        </article>
+    </main>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- 푸터 -->
+    <footer class="bg-gray-800 text-center py-4 px-4 mt-10 rounded-t-3xl shadow-lg">
+        <p class="text-sm text-gray-400">연락처: thiskorea@cberi.go.kr</p>
+    </footer>
+
 </body>
 </html>
