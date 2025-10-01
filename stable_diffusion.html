@@ -1,75 +1,57 @@
+<!-- stable_diffusion.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>ThisKorea81 - 인공지능 지식 공유</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <style>
-    header {
-      background: #fff;
-      color: #000;
-      padding: 10px 0;
-      text-align: center;
-    }
-    nav {
-      background: #000; /* 밤 하늘 효과 */
-    }
-    nav ul li a {
-      color: #f0f0f0; /* 별빛처럼 밝은 글씨 */
-    }
-    footer {
-      background: #f8f9fa;
-      padding: 10px 0;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스테이블디퓨전 - ThisKorea81</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800">
 
-  <header>
-    <h1>인공지능 지식 공유</h1>
-  </header>
+    <!-- 헤더 & 네비게이션 바 -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600">ThisKorea81</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="class.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">수업</a>
+                <a href="python.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">파이썬</a>
+                <a href="computer_science.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">정보과학</a>
+                <a href="computer_vision.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">컴퓨터비전</a>
+                <a href="natural_language_processing.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">자연어처리</a>
+                <a href="stable_diffusion.html" class="font-semibold text-indigo-600 bg-indigo-50 py-2 px-4 rounded-lg">스테이블디퓨전</a>
+                <a href="project.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">프로젝트</a>
+            </div>
+            <div class="md:hidden">
+                <button class="text-slate-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">ThisKorea81</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="python.html">파이썬</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="computer_science.html">정보과학</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="computer_vision.html">컴퓨터비전</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="natural_language_processing.html">자연어처리</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="stable_diffusion.html">스테이블디퓨전</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="project.html">프로젝트</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <!-- 메인 컨텐츠 -->
+    <main class="container mx-auto p-6 md:p-10">
+        <div class="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-slate-200">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900">스테이블디퓨전</h1>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                스테이블디퓨전 관련 콘텐츠가 여기에 추가될 예정입니다.
+            </p>
+        </div>
+    </main>
 
-  <article class="container mt-5">
-    <p>생성형인공지능을 이용한 동화책 만들기</p>
-    <p>티처블머신을 이용한 쇠검은머리쑥새 찾기 https://github.com/thiskorea81/project_sura</p>
-  </article>
+    <!-- 푸터 -->
+    <footer class="text-center py-8 mt-10">
+        <p class="text-sm text-slate-500">연락처: thiskorea@cberi.go.kr</p>
+    </footer>
 
-  <footer>
-    <p>연락처: thiskorea@cberi.go.kr</p>
-  </footer>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
