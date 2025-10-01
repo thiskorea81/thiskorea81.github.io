@@ -1,24 +1,17 @@
+<!-- python-exer1.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>파이썬 기초 대화형 복습</title>
+    <title>파이썬 기초 연습 1 - ThisKorea81</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The application is designed as a single-page tabbed interface. Four main sections (Variables, Operators, Conditionals, Loops) are presented as navigable tabs. This structure was chosen because it logically segments the distinct topics from the source report, allowing students to focus on one concept at a time without being overwhelmed. The user flow is simple: click a tab, and the relevant interactive module appears. This is more user-friendly than a long, scrolling document and promotes focused, active learning by replacing static code blocks with live, interactive "sandboxes" where students can manipulate inputs and see immediate results. A new section for String Formatting has been added under Operators to incorporate the user's latest request. -->
-    <!-- Visualization & Content Choices: 
-        1. Variables & Types: Goal(Inform) -> Code/Output Display -> Interaction(Run button) -> Justification(Provides immediate, clear feedback on data types) -> Method(JS DOM manipulation).
-        2. Operators: Goal(Compare/Explore) -> Live Input Fields -> Interaction(Real-time updates on input change) -> Justification(Effectively demonstrates cause-and-effect of different operators and values) -> Method(JS event listeners).
-        3. String Formatting: Goal(Inform/Practice) -> Static Code/Output -> Interaction(Run button) -> Justification(Clearly demonstrates various string formatting techniques as requested) -> Method(JS DOM manipulation).
-        4. Conditionals: Goal(Understand Logic) -> Score Input -> Interaction(Live highlighting of the executed code path) -> Justification(Visually connects a condition to its outcome, making abstract logic tangible) -> Method(JS class manipulation).
-        5. Loops: Goal(Visualize Change) -> "Run" Button with Animation -> Interaction(Step-by-step output display) -> Justification(Clearly illustrates the iterative process of loops, which can be hard to grasp from static text) -> Method(JS setTimeout for animation).
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
         }
         .code-block {
             background-color: #1E293B;
@@ -66,12 +59,32 @@
         }
     </style>
 </head>
-<body class="bg-stone-50 text-slate-800">
-    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
-        <header class="text-center mb-8">
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- 헤더 & 네비게이션 바 -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600">ThisKorea81</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="class.html" class="font-semibold text-indigo-600 bg-indigo-50 py-2 px-4 rounded-lg">수업</a>
+                <a href="computer_vision.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">컴퓨터비전</a>
+                <a href="natural_language_processing.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">자연어처리</a>
+                <a href="project.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">프로젝트</a>
+            </div>
+            <div class="md:hidden">
+                <button class="text-slate-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-teal-600">파이썬 기초 대화형 복습</h1>
             <p class="text-slate-600 mt-2">각 주제를 클릭하여 대화형 예제를 통해 파이썬 기초를 복습해 보세요.</p>
-        </header>
+        </div>
 
         <nav id="navigation" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
             <button data-target="variables" class="nav-btn active w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">1. 변수와 자료형</button>
@@ -80,7 +93,7 @@
             <button data-target="loops" class="nav-btn w-full sm:w-auto px-6 py-2 bg-white rounded-full shadow-sm border border-gray-200 text-slate-700">4. 반복문</button>
         </nav>
 
-        <main id="content-container">
+        <div id="content-container">
             <section id="variables" class="content-section space-y-6 fade-in">
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold mb-2">1. 변수와 자료형 (Variables & Data Types)</h2>
@@ -213,8 +226,13 @@ while count < 3:
                     </div>
                 </div>
             </section>
-        </main>
-    </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="text-center py-8 mt-10">
+        <p class="text-sm text-slate-500">연락처: thiskorea@cberi.go.kr</p>
+    </footer>
 
     <script>
         const navButtons = document.querySelectorAll('.nav-btn');
