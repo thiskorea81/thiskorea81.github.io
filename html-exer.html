@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대화형 HTML 기초 학습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is designed as a single-page interactive tutorial. It uses a top navigation bar for smooth scrolling to key sections: '기본 구조' (Structure), '기본 태그' (Tags), and a final '직접 해보기' (Try it Yourself) section. This structure transforms the linear document into an explorable learning space. The core interactive elements are a 'concept highlighter' for the basic structure section and a 'live code editor' for the tags section. This design was chosen to facilitate active learning by allowing users to see the direct relationship between HTML code and its visual output, which is more engaging and effective for beginners than static text. -->
+    <!-- Visualization & Content Choices: Report Info: Basic HTML syntax -> Goal: Inform and allow experimentation -> Presentation Method: Interactive code highlighters and live editors with side-by-side code and preview panes. -> Interaction: Click-to-highlight for concepts, and real-time preview updates as the user types code. -> Justification: This direct manipulation and immediate feedback is the most effective way to teach coding principles. It turns passive reading into an active, hands-on exercise. -> Library/Method: Vanilla JavaScript for all interactions (DOM manipulation). -> CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .highlight {
+            background-color: #FFF3CD;
+            transition: background-color 0.3s ease;
+        }
+        .code-block {
+            background-color: #2D3748;
+            color: #E2E8F0;
+            font-family: monospace;
+            white-space: pre;
+        }
+        .tab-active {
+            border-color: #4A90E2;
+            color: #4A90E2;
+            background-color: #EBF8FF;
+        }
+        .tab-inactive {
+            border-color: transparent;
+            color: #718096;
+        }
+        .live-preview-container {
+            border: 1px solid #E2E8F0;
+            background-color: white;
+            min-height: 200px;
+        }
+        .code-textarea {
+            background-color: #1A202C;
+            color: #CBD5E0;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-gray-800">🚀 HTML 첫걸음</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#intro" class="text-gray-600 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">소개</a>
+                        <a href="#structure" class="text-gray-600 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">기본 구조</a>
+                        <a href="#tags" class="text-gray-600 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">핵심 태그</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section id="intro" class="text-center mb-20">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">홈페이지 제작, 레고 블록처럼 쉽고 재미있게!</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                HTML은 웹페이지의 뼈대를 만드는 언어입니다. 이 가이드는 홈페이지를 처음 만드는 분들을 위해 가장 필수적인 문법을 소개합니다. 각 섹션을 따라 직접 코드를 만져보며 HTML의 세계를 탐험해 보세요.
+            </p>
+        </section>
+
+        <section id="structure" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">1. HTML 문서의 기본 구조</h2>
+                <p class="mt-2 text-md text-gray-500">모든 HTML 문서는 아래와 같은 정해진 틀 안에서 만들어집니다. 각 항목을 클릭하여 코드에서 어떤 부분인지 확인해보세요.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div id="structure-descriptions" class="space-y-3">
+                    <div data-target="s-doctype" class="p-4 border rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                        <h3 class="font-semibold text-blue-700">&lt;!DOCTYPE html&gt;</h3>
+                        <p class="text-sm text-gray-600">이 문서가 HTML5 형식임을 브라우저에 알리는 선언입니다.</p>
+                    </div>
+                    <div data-target="s-html" class="p-4 border rounded-lg cursor-pointer hover:bg-green-50 transition-colors">
+                        <h3 class="font-semibold text-green-700">&lt;html&gt;</h3>
+                        <p class="text-sm text-gray-600">HTML 문서의 시작과 끝을 나타내며, 모든 내용은 이 태그 안에 있어야 합니다.</p>
+                    </div>
+                    <div data-target="s-head" class="p-4 border rounded-lg cursor-pointer hover:bg-purple-50 transition-colors">
+                        <h3 class="font-semibold text-purple-700">&lt;head&gt;</h3>
+                        <p class="text-sm text-gray-600">페이지 제목, 스타일 등 웹페이지에 직접 보이지 않는 정보를 담습니다.</p>
+                    </div>
+                    <div data-target="s-title" class="p-4 border rounded-lg cursor-pointer hover:bg-yellow-50 transition-colors">
+                        <h3 class="font-semibold text-yellow-700">&lt;title&gt;</h3>
+                        <p class="text-sm text-gray-600">웹 브라우저 탭에 표시될 페이지의 제목을 설정합니다.</p>
+                    </div>
+                    <div data-target="s-body" class="p-4 border rounded-lg cursor-pointer hover:bg-red-50 transition-colors">
+                        <h3 class="font-semibold text-red-700">&lt;body&gt;</h3>
+                        <p class="text-sm text-gray-600">웹페이지에 실제로 보이는 모든 내용(글자, 이미지 등)이 들어가는 부분입니다.</p>
+                    </div>
+                </div>
+                <div class="code-block rounded-lg p-4 text-sm overflow-x-auto">
+                    <code id="s-doctype">&lt;!DOCTYPE html&gt;</code>
+                    <code id="s-html" class="block"><span>&lt;html&gt;</span>
+  <code id="s-head" class="block"><span>  &lt;head&gt;</span>
+    <code id="s-title" class="block"><span>    &lt;title&gt;</span>페이지 제목<span>&lt;/title&gt;</span></code>
+  <span>  &lt;/head&gt;</span></code>
+  <code id="s-body" class="block"><span>  &lt;body&gt;</span>
+    <code class="block"><span>    &lt;h1&gt;</span>안녕하세요!<span>&lt;/h1&gt;</span></code>
+    <code class="block"><span>    &lt;p&gt;</span>홈페이지 내용이 들어갑니다.<span>&lt;/p&gt;</span></code>
+  <span>  &lt;/body&gt;</span></code>
+<span>&lt;/html&gt;</span></code>
+                </div>
+            </div>
+        </section>
+
+        <section id="tags" class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">2. 꼭 알아야 할 기본 태그</h2>
+                <p class="mt-2 text-md text-gray-500">HTML 태그를 이용해 내용을 꾸미고 구성할 수 있습니다. 아래 탭을 눌러 각 태그의 사용법을 익히고, 직접 코드를 수정하여 실시간으로 결과를 확인해보세요.</p>
+            </div>
+
+            <div>
+                <div class="mb-4 border-b border-gray-200">
+                    <nav id="tag-tabs" class="-mb-px flex space-x-6" aria-label="Tabs">
+                        <button data-tab="tab-content-1" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm tab-active">제목과 문단</button>
+                        <button data-tab="tab-content-2" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm tab-inactive">글자 꾸미기</button>
+                        <button data-tab="tab-content-3" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm tab-inactive">목록 만들기</button>
+                        <button data-tab="tab-content-4" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm tab-inactive">링크와 이미지</button>
+                    </nav>
+                </div>
+                
+                <div id="tab-content-1" class="tab-content">
+                    <p class="mb-4 text-gray-600"><code>&lt;h1&gt;</code> ~ <code>&lt;h6&gt;</code> 태그로 제목의 중요도를, <code>&lt;p&gt;</code> 태그로 문단을, <code>&lt;br&gt;</code> 태그로 줄바꿈을 표현합니다.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <textarea class="code-textarea w-full h-48 p-4 rounded-md" data-preview="preview-1">&lt;h1&gt;가장 중요한 제목&lt;/h1&gt;
+&lt;h2&gt;다음으로 중요한 제목&lt;/h2&gt;
+&lt;p&gt;이것은 첫 번째 문단입니다.&lt;br&gt;줄을 바꾸고 싶을 때 사용해요.&lt;/p&gt;
+&lt;p&gt;이것은 두 번째 문단입니다.&lt;/p&gt;</textarea>
+                        <div id="preview-1" class="live-preview-container rounded-md p-4"></div>
+                    </div>
+                </div>
+
+                <div id="tab-content-2" class="tab-content hidden">
+                    <p class="mb-4 text-gray-600"><code>&lt;strong&gt;</code>(굵게), <code>&lt;em&gt;</code>(기울임), <code>&lt;u&gt;</code>(밑줄) 태그로 텍스트를 강조할 수 있습니다.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <textarea class="code-textarea w-full h-48 p-4 rounded-md" data-preview="preview-2">&lt;p&gt;이 글자는 &lt;strong&gt;굵게&lt;/strong&gt; 표시합니다.&lt;/p&gt;
+&lt;p&gt;이 글자는 &lt;em&gt;기울여서&lt;/em&gt; 표시합니다.&lt;/p&gt;
+&lt;p&gt;이 글자는 &lt;u&gt;밑줄&lt;/u&gt;을 표시합니다.&lt;/p&gt;</textarea>
+                        <div id="preview-2" class="live-preview-container rounded-md p-4"></div>
+                    </div>
+                </div>
+
+                <div id="tab-content-3" class="tab-content hidden">
+                    <p class="mb-4 text-gray-600"><code>&lt;ul&gt;</code>(순서 없는 목록)과 <code>&lt;ol&gt;</code>(순서 있는 목록)으로 깔끔한 목록을 만들 수 있습니다. 각 항목은 <code>&lt;li&gt;</code> 태그를 사용합니다.</p>
+                     <div class="grid md:grid-cols-2 gap-4">
+                        <textarea class="code-textarea w-full h-48 p-4 rounded-md" data-preview="preview-3">&lt;h4&gt;좋아하는 과일&lt;/h4&gt;
+&lt;ul&gt;
+    &lt;li&gt;사과&lt;/li&gt;
+    &lt;li&gt;바나나&lt;/li&gt;
+    &lt;li&gt;딸기&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;오늘 할 일&lt;/h4&gt;
+&lt;ol&gt;
+    &lt;li&gt;HTML 공부하기&lt;/li&gt;
+    &lt;li&gt;운동하기&lt;/li&gt;
+    &lt;li&gt;저녁 식사하기&lt;/li&gt;
+&lt;/ol&gt;</textarea>
+                        <div id="preview-3" class="live-preview-container rounded-md p-4"></div>
+                    </div>
+                </div>
+                
+                <div id="tab-content-4" class="tab-content hidden">
+                    <p class="mb-4 text-gray-600"><code>&lt;a&gt;</code> 태그로 다른 페이지로 연결되는 링크를, <code>&lt;img&gt;</code> 태그로 이미지를 삽입할 수 있습니다.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                       <textarea class="code-textarea w-full h-48 p-4 rounded-md" data-preview="preview-4">&lt;a href="https://www.google.com" target="_blank"&gt;구글로 이동하기&lt;/a&gt;
+
+&lt;p&gt;아래는 샘플 이미지입니다:&lt;/p&gt;
+&lt;img src="https://placehold.co/300x150/A4C3F5/333333?text=HTML+Image" alt="예시 이미지"&gt;</textarea>
+                        <div id="preview-4" class="live-preview-container rounded-md p-4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+            <p class="text-2xl font-bold mb-2">이제 여러분 차례입니다!</p>
+            <p class="text-gray-300">이곳에서 배운 기본 문법들을 활용하여 간단한 자기소개 페이지를 만들어보세요.<br>직접 코드를 작성하는 것이 최고의 학습 방법입니다. 🚀</p>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const structureDescriptions = document.getElementById('structure-descriptions');
+        let highlightedElement = null;
+
+        structureDescriptions.addEventListener('click', function(e) {
+            const targetDiv = e.target.closest('div[data-target]');
+            if (!targetDiv) return;
+
+            const targetId = targetDiv.dataset.target;
+            const codeElement = document.getElementById(targetId);
+
+            if (highlightedElement) {
+                highlightedElement.classList.remove('highlight', 'rounded');
+            }
+
+            if (codeElement) {
+                codeElement.classList.add('highlight', 'rounded');
+                highlightedElement = codeElement;
+            }
+        });
+
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(item => {
+                    item.classList.remove('tab-active');
+                    item.classList.add('tab-inactive');
+                });
+                tab.classList.add('tab-active');
+                tab.classList.remove('tab-inactive');
+
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(tab.dataset.tab).classList.remove('hidden');
+            });
+        });
+
+        const textareas = document.querySelectorAll('.code-textarea');
+        textareas.forEach(textarea => {
+            const previewId = textarea.dataset.preview;
+            const previewElement = document.getElementById(previewId);
+
+            function updatePreview() {
+                if(previewElement) {
+                    previewElement.innerHTML = textarea.value;
+                }
+            }
+
+            textarea.addEventListener('input', updatePreview);
+            
+            updatePreview();
+        });
+    });
+</script>
+</body>
+</html>
