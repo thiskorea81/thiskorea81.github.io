@@ -1,0 +1,168 @@
+<!-- c_language.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C언어 핵심 마스터</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #F8F7F4;
+        }
+        .code-block {
+            background-color: #2D3748;
+            color: #E2E8F0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            background-color: #EAE8E2;
+            border-left-color: #D4A373;
+            color: #4A4A4A;
+        }
+        .interactive-box {
+            background-color: #FFFFFF;
+            border: 1px solid #EAE8E2;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+        .memory-box { border: 2px solid #A0AEC0; padding: 0.75rem; border-radius: 0.25rem; background-color: #F7FAFC; min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
+        .address { font-size: 0.75rem; color: #718096; font-family: monospace; }
+        .value { font-size: 1.25rem; font-weight: 700; color: #4A5568; }
+        .hanoi-canvas { border: 1px solid #CBD5E0; background-color: #FFFFFF; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        .array-cell-pointer { border: 2px solid #D4A373 !important; box-shadow: 0 0 10px #D4A373; }
+        .ds-viz { min-height: 80px; background-color: #F7FAFC; border-radius: 0.5rem; border: 1px solid #EDF2F7; padding: 1rem; display: flex; align-items: center; overflow-x: auto; }
+        .ds-node, .ds-item { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border: 2px solid #4A5568; border-radius: 0.25rem; font-weight: bold; background-color: white; }
+        .ds-arrow { font-size: 2rem; color: #718096; margin: 0 0.5rem; }
+        .stack-viz { flex-direction: column-reverse; min-height: 240px; width: 100px; margin: 0 auto; gap: 4px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 헤더 & 네비게이션 바 -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600">ThisKorea81</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="class.html" class="font-semibold text-indigo-600 bg-indigo-50 py-2 px-4 rounded-lg">수업</a>
+                <a href="computer_vision.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">컴퓨터비전</a>
+                <a href="natural_language_processing.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">자연어처리</a>
+                <a href="project.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">프로젝트</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white/80 backdrop-blur-sm border-r border-gray-200/80 sticky top-16 h-[calc(100vh-4rem)] hidden md:block">
+            <div class="p-6">
+                <h1 class="text-xl font-bold text-[#4A4A4A]">C언어 기초</h1>
+                <p class="text-sm text-gray-500 mt-1">핵심 개념 학습</p>
+            </div>
+            <nav id="desktop-nav" class="mt-4 flex flex-col space-y-1">
+                <a href="#part1" class="nav-link p-4 text-gray-600 font-medium">1. 변수와 입출력</a>
+                <a href="#part2" class="nav-link p-4 text-gray-600 font-medium">2. 연산자와 제어문</a>
+                <a href="#part3" class="nav-link p-4 text-gray-600 font-medium">3. 배열과 포인터</a>
+                <a href="#part4" class="nav-link p-4 text-gray-600 font-medium">4. 함수</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 md:p-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Part 1: 변수, 자료형, 입출력 -->
+                <section id="part1" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold mb-2">Part 1. 변수, 자료형, 입출력</h2>
+                    <p class="text-lg text-gray-600 mb-6">프로그래밍의 가장 기본 단위인 데이터를 저장하고 화면에 나타내는 방법을 배웁니다.</p>
+                    <div class="space-y-8">
+                        <article>
+                            <h3 class="text-xl font-semibold mb-4">1.1 변수와 자료형</h3>
+                            <p class="text-slate-600 mb-4">변수는 데이터를 저장하는 공간이고, 자료형은 그 공간에 어떤 종류의 데이터를 저장할지 알려줍니다.</p>
+                            <div class="code-block">
+                                <span class="text-gray-400">// 기본 자료형 예시</span><br>
+                                int age = 20; <span class="text-gray-400">// 정수형 변수</span><br>
+                                float height = 175.5; <span class="text-gray-400">// 실수형 변수</span><br>
+                                char initial = 'K'; <span class="text-gray-400">// 문자형 변수</span>
+                            </div>
+                        </article>
+                        <article>
+                            <h3 class="text-xl font-semibold mb-4">1.2 입출력 함수</h3>
+                            <p class="text-slate-600 mb-4">`printf` 함수로 화면에 데이터를 출력하고, `scanf` 함수로 사용자로부터 데이터를 입력받습니다.</p>
+                             <div class="code-block">
+                                #include &lt;stdio.h&gt;<br><br>
+                                int main(void) {<br>
+                                &nbsp;&nbsp;int number;<br>
+                                &nbsp;&nbsp;printf("숫자를 입력하세요: ");<br>
+                                &nbsp;&nbsp;scanf("%d", &number); <span class="text-gray-400">// 사용자로부터 정수 입력받기</span><br>
+                                &nbsp;&nbsp;printf("입력한 숫자: %d\n", number); <span class="text-gray-400">// 입력받은 숫자 출력하기</span><br>
+                                &nbsp;&nbsp;return 0;<br>
+                                }
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Part 2: 연산자, 제어문 -->
+                 <section id="part2" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold mb-2">Part 2. 연산자와 제어문</h2>
+                    <p class="text-lg text-gray-600 mb-6">데이터를 가공하고 프로그램의 흐름을 제어하는 방법을 배웁니다.</p>
+                     <div class="space-y-8">
+                        <article>
+                            <h3 class="text-xl font-semibold mb-4">2.1 연산자</h3>
+                            <p class="text-slate-600 mb-4">산술 연산자(+, -, *, /), 비교 연산자(==, !=, >), 논리 연산자(&&, ||) 등을 사용하여 데이터를 가공합니다.</p>
+                            <div class="code-block">
+                                int x = 10, y = 5;<br>
+                                int sum = x + y; <span class="text-gray-400">// 15</span><br>
+                                int is_greater = x > y; <span class="text-gray-400">// 참(1)</span>
+                            </div>
+                        </article>
+                        <article>
+                            <h3 class="text-xl font-semibold mb-4">2.2 제어문</h3>
+                            <p class="text-slate-600 mb-4">`if-else`로 조건을 검사하고, `for`와 `while`로 특정 코드를 반복 실행합니다.</p>
+                             <div class="code-block">
+                                <span class="text-gray-400">// 1부터 5까지의 합 구하기</span><br>
+                                int total = 0;<br>
+                                for (int i = 1; i <= 5; i++) {<br>
+                                &nbsp;&nbsp;total += i;<br>
+                                }<br>
+                                printf("총합: %d\n", total); <span class="text-gray-400">// 15 출력</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Part 3: 배열과 포인터 -->
+                <section id="part3" class="mb-16 scroll-mt-20">
+                    <h2 class="text-3xl font-bold mb-2">Part 3. 배열과 포인터</h2>
+                    <p class="text-lg text-gray-600 mb-6">C언어의 핵심, 여러 개의 데이터를 묶어 관리하는 배열과 메모리 주소를 다루는 포인터에 대해 배웁니다.</p>
+                    <!-- c_3.html의 Part 1, 2, 3, 6, 7 내용이 여기에 통합됩니다. -->
+                </section>
+                
+                <!-- Part 4: 함수 -->
+                <section id="part4" class="mb-16 scroll-mt-20">
+                     <h2 class="text-3xl font-bold mb-2">Part 4. 함수</h2>
+                    <p class="text-lg text-gray-600 mb-6">코드를 재사용하고 프로그램을 기능별로 정리하는 함수와 재귀 호출에 대해 배웁니다.</p>
+                    <!-- c_3.html의 Part 4, 5 내용이 여기에 통합됩니다. -->
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // c_3.html의 모든 JavaScript 코드가 여기에 위치합니다.
+        // 페이지 구조가 변경되었으므로, 필요한 경우 ID 선택자를 수정해야 합니다.
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!-- c_2.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C언어 기초 2 - ThisKorea81</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+        .code-block {
+            background-color: #1E293B;
+            color: #E2E8F0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'D2Coding', monospace, Consolas, 'Courier New', monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- 헤더 & 네비게이션 바 -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600">ThisKorea81</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="class.html" class="font-semibold text-indigo-600 bg-indigo-50 py-2 px-4 rounded-lg">수업</a>
+                <a href="computer_vision.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">컴퓨터비전</a>
+                <a href="natural_language_processing.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">자연어처리</a>
+                <a href="project.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">프로젝트</a>
+            </div>
+            <div class="md:hidden">
+                <button class="text-slate-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="container mx-auto p-6 md:p-10">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold mb-8 text-slate-900">C언어: 연산자, 제어문</h1>
+            <div class="space-y-12">
+                <article>
+                    <h2 class="text-2xl font-bold mb-4">1. 연산자</h2>
+                    <p class="text-slate-600 mb-4">산술 연산자(+, -, *, /), 비교 연산자(==, !=, >), 논리 연산자(&&, ||) 등을 사용하여 데이터를 가공합니다.</p>
+                    <div class="code-block">
+                        int x = 10, y = 5;<br>
+                        int sum = x + y; <span class="text-gray-400">// 15</span><br>
+                        int is_greater = x > y; <span class="text-gray-400">// 참(1)</span>
+                    </div>
+                </article>
+                <article>
+                    <h2 class="text-2xl font-bold mb-4">2. 제어문</h2>
+                    <p class="text-slate-600 mb-4">`if-else`로 조건을 검사하고, `for`와 `while`로 특정 코드를 반복 실행합니다.</p>
+                     <div class="code-block">
+                        <span class="text-gray-400">// 1부터 5까지의 합 구하기</span><br>
+                        int total = 0;<br>
+                        for (int i = 1; i <= 5; i++) {<br>
+                        &nbsp;&nbsp;total += i;<br>
+                        }<br>
+                        printf("총합: %d\n", total); <span class="text-gray-400">// 15 출력</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="text-center py-8 mt-10">
+        <p class="text-sm text-slate-500">연락처: thiskorea@cberi.go.kr</p>
+    </footer>
+
+</body>
+</html>

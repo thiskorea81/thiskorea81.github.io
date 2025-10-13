@@ -1,23 +1,18 @@
+<!-- c_3.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C언어 핵심 마스터: 배열, 포인터, 함수</title>
+    <title>C언어 기초 3 - ThisKorea81</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Slate --><!-- Application Structure Plan: 이 SPA는 고정된 사이드바 네비게이션과 메인 콘텐츠 영역으로 구성된 대시보드 스타일 레이아웃을 채택했습니다. 이 구조는 선형적인 문서 구조보다 학습에 효과적입니다. 사용자는 특정 주제(배열, 포인터, 함수 등)에 쉽게 접근하고 복습할 수 있어, 복잡한 개념을 순차적 압박 없이 자신의 속도에 맞춰 집중적으로 학습할 수 있습니다. 각 섹션은 개념 설명, 코드 예제, 그리고 동적 시각화를 결합하여 추상적인 프로그래밍 개념을 구체적이고 상호작용 가능한 경험으로 전환하도록 설계되었습니다. 이를 통해 사용자의 이해도와 참여도를 높이는 것이 목표입니다. --><!-- Visualization & Content Choices: 
-        - 1D/2D 배열: Goal: 구조 이해 -> Viz: HTML/CSS로 시각화된 배열 칸 -> Interaction: 칸에 마우스를 올리면 인덱스와 값 표시 -> Justification: 인덱스와 요소의 관계를 직관적으로 연결.
-        - 포인터: Goal: 주소와 값의 개념 분리 -> Viz: 메모리 블록 다이어그램 -> Interaction: 버튼 클릭으로 주소 할당(&) 및 역참조(*) 과정을 시각적으로 시뮬레이션 -> Justification: C언어에서 가장 추상적인 포인터 개념을 구체화하여 학습 장벽을 낮춤.
-        - 함수 (Call by Value/Reference): Goal: 값 전달 방식의 차이 이해 -> Viz: 'main'과 'function' 스코프 시각화 -> Interaction: 함수 호출 시 값 복사 또는 주소 참조 과정을 단계별로 시각화 -> Justification: 두 호출 방식의 핵심 차이점인 '원본 데이터 변경 여부'를 명확하게 보여줌.
-        - 재귀 (하노이의 탑): Goal: 재귀 호출 스택 이해 -> Viz: Canvas 기반 타워 및 원판 애니메이션 -> Interaction: 원판 개수 선택 후 시작 버튼으로 애니메이션 실행, 현재 재귀 호출 상태 텍스트로 표시 -> Justification: 복잡한 재귀 호출 흐름을 시각적 애니메이션으로 변환하여 이해를 도움.
-        - 재귀 (피보나치): Goal: 메모이제이션의 효율성 증명 -> Viz: 함수 호출 트리 및 Chart.js 막대그래프 -> Interaction: 숫자 입력 후 일반 재귀와 메모이제이션 재귀의 호출 횟수를 비교 -> Justification: 동일 문제에 대한 알고리즘적 개선 효과를 정량적(호출 횟수)이고 시각적(그래프)으로 극명하게 대비시켜 보여줌.
-    --><!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --><style>
+    <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #F8F7F4; /* Warm neutral background */
-            color: #4A4A4A;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
         }
         .code-block {
             background-color: #2D3748;
@@ -28,18 +23,9 @@
             white-space: pre-wrap;
             word-break: break-all;
         }
-        .nav-link {
-            transition: all 0.2s ease-in-out;
-            border-left: 3px solid transparent;
-        }
-        .nav-link.active, .nav-link:hover {
-            background-color: #EAE8E2;
-            border-left-color: #D4A373;
-            color: #4A4A4A;
-        }
         .interactive-box {
             background-color: #FFFFFF;
-            border: 1px solid #EAE8E2;
+            border: 1px solid #E2E8F0;
             border-radius: 0.5rem;
             padding: 1.5rem;
         }
@@ -77,8 +63,8 @@
             max-height: 400px;
         }
         .array-cell-pointer {
-            border: 2px solid #D4A373 !important;
-            box-shadow: 0 0 10px #D4A373;
+            border: 2px solid #4F46E5 !important;
+            box-shadow: 0 0 10px #4F46E5;
         }
         .ds-viz {
             min-height: 80px;
@@ -102,12 +88,6 @@
             font-weight: bold;
             background-color: white;
         }
-        .ds-node-ptr {
-            font-size: 0.7rem;
-            text-align: center;
-            color: #718096;
-            border-left: 1px solid #CBD5E0;
-        }
         .ds-arrow {
             font-size: 2rem;
             color: #718096;
@@ -120,35 +100,12 @@
             margin: 0 auto;
             gap: 4px;
         }
-        /* Struct/Union specific styles */
-        .struct-member, .union-member {
-            background-color: #E2E8F0;
-            padding: 0.5rem;
-            margin-bottom: 0.25rem;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .struct-block, .union-block {
-            border: 2px solid #D4A373;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #FFF9F2;
-            margin-bottom: 1rem;
-        }
-        .struct-container, .union-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
         .struct-array-item {
-            border: 1px solid #D4A373;
+            border: 1px solid #C4B5FD;
             padding: 0.5rem;
             margin: 0.5rem;
             border-radius: 0.25rem;
-            background-color: #FFF9F2;
+            background-color: #F5F3FF;
         }
         .struct-array-viz {
             display: flex;
@@ -177,57 +134,48 @@
             color: #2C3E50;
             margin-top: 1.5rem;
         }
-
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
     </style>
 </head>
-<body class="antialiased">
-    <div class="flex min-h-screen">
-        <!-- Sidebar Navigation --><aside class="w-64 bg-white/80 backdrop-blur-sm border-r border-gray-200/80 sticky top-0 h-screen hidden md:block">
-            <div class="p-6">
-                <h1 class="text-xl font-bold text-[#4A4A4A]">C언어 핵심 마스터</h1>
-                <p class="text-sm text-gray-500 mt-1">배열, 포인터, 함수</p>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- 헤더 & 네비게이션 바 -->
+    <header class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600">ThisKorea81</a>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="class.html" class="font-semibold text-indigo-600 bg-indigo-50 py-2 px-4 rounded-lg">수업</a>
+                <a href="computer_vision.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">컴퓨터비전</a>
+                <a href="natural_language_processing.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">자연어처리</a>
+                <a href="project.html" class="font-semibold text-slate-700 hover:text-indigo-600 py-2 px-4 rounded-lg transition-colors">프로젝트</a>
             </div>
-            <nav id="desktop-nav" class="mt-4 flex flex-col space-y-1">
-                <a href="#part1" class="nav-link p-4 text-gray-600 font-medium">1. 1차원 배열</a>
-                <a href="#part2" class="nav-link p-4 text-gray-600 font-medium">2. 포인터</a>
-                <a href="#part3" class="nav-link p-4 text-gray-600 font-medium">3. 2차원 배열</a>
-                <a href="#part4" class="nav-link p-4 text-gray-600 font-medium">4. 함수 기초</a>
-                <a href="#part5" class="nav-link p-4 text-gray-600 font-medium">5. 함수 심화: 재귀</a>
-                <a href="#part6" class="nav-link p-4 text-gray-600 font-medium">6. 구조체 & 공용체</a>
-                <a href="#part7" class="nav-link p-4 text-gray-600 font-medium">7. 자료구조 입문</a>
-            </nav>
-        </aside>
+            <div class="md:hidden">
+                <button class="text-slate-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-        <!-- Main Content --><main class="flex-1 p-4 sm:p-6 md:p-10">
-            <div class="max-w-4xl mx-auto">
-                <!-- Mobile Nav Dropdown --><div class="md-hidden mb-6">
-                    <select id="mobile-nav" class="w-full p-3 border border-gray-300 rounded-lg bg-white">
-                        <option value="#part1">1. 1차원 배열</option>
-                        <option value="#part2">2. 포인터</option>
-                        <option value="#part3">3. 2차원 배열</option>
-                        <option value="#part4">4. 함수 기초</option>
-                        <option value="#part5">5. 함수 심화: 재귀</option>
-                        <option value="#part6">6. 구조체 & 공용체</option>
-                        <option value="#part7">7. 자료구조 입문</option>
-                    </select>
-                </div>
-
+    <!-- 메인 컨텐츠 -->
+    <main class="container mx-auto p-6 md:p-10">
+        <div class="max-w-6xl mx-auto py-12">
+            <section id="intro" class="text-center mb-20">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">C언어 핵심 마스터: 배열, 포인터, 함수</h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    C언어의 강력한 기능인 배열, 포인터, 함수에 대해 학습합니다. 이 가이드는 복잡한 개념을 시각적으로 이해할 수 있도록 돕습니다.
+                </p>
+            </section>
+    
+            <div id="interactive-content-placeholder">
                 <!-- Part 1: 1D Array --><section id="part1" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 1. 1차원 배열: 데이터 기차 🚂</h2>
                     <p class="text-lg text-gray-600 mb-6">같은 종류의 데이터를 순서대로 묶어 관리하는 가장 기본적인 자료 구조입니다. 1차원 배열을 통해 여러 개의 데이터를 효율적으로 다루는 방법을 배워봅시다.</p>
-                    
                     <div class="interactive-box">
                         <h3 class="text-xl font-semibold mb-4">배열 시각화</h3>
-                        <p class="mb-4">아래 배열의 각 칸에 마우스를 올려 인덱스와 값을 확인해보세요. C언어에서 배열의 인덱스는 항상 <span class="font-bold text-[#D4A373]">0</span>부터 시작합니다.</p>
+                        <p class="mb-4">아래 배열의 각 칸에 마우스를 올려 인덱스와 값을 확인해보세요. C언어에서 배열의 인덱스는 항상 <span class="font-bold text-indigo-600">0</span>부터 시작합니다.</p>
                         <div id="array-viz" class="flex flex-wrap gap-2 items-center justify-center p-4 bg-gray-50 rounded-lg"></div>
                         <div id="array-tooltip" class="mt-4 text-center font-mono p-2 bg-yellow-100 text-yellow-800 rounded-md h-10 flex items-center justify-center"></div>
                     </div>
-
                     <h3 class="text-2xl font-bold mt-8 mb-4">핵심 문법</h3>
                     <div class="code-block">#include &lt;stdio.h&gt;
 
@@ -247,8 +195,7 @@ int main() {
     
     return 0;
 }</div>
-                    
-                    <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                    <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 1</h4>
                         <p class="mt-2 text-gray-700">정수 10개를 저장할 수 있는 배열을 만들고 사용자로부터 10개의 숫자를 입력받아, 그 중 **가장 큰 값**과 **가장 작은 값**을 찾아 출력하는 프로그램을 작성해보세요.</p>
                     </div>
@@ -257,7 +204,6 @@ int main() {
                 <!-- Part 2: Pointer --><section id="part2" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 2. 포인터: 메모리 보물 지도 🗺️</h2>
                     <p class="text-lg text-gray-600 mb-6">포인터는 C언어의 핵심이자 가장 강력한 기능입니다. 변수의 값이 아닌 '주소'를 다루는 방법을 이해하면 메모리를 직접 제어하는 강력한 프로그래밍이 가능해집니다.</p>
-
                     <div class="interactive-box mb-8">
                         <h3 class="text-xl font-semibold mb-4">포인터 기초 상호작용</h3>
                         <p class="mb-4">아래 버튼을 눌러 포인터가 메모리 주소를 할당받고, 그 주소를 통해 원본 값을 어떻게 변경하는지 단계별로 확인해보세요.</p>
@@ -274,13 +220,12 @@ int main() {
                             </div>
                         </div>
                         <div class="mt-6 flex flex-wrap gap-3 justify-center">
-                            <button id="ptr-step1" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">1. 주소 할당 (`p_map = &treasure`)</button>
-                            <button id="ptr-step2" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition" disabled>2. 값 변경 (`*p_map = 250`)</button>
+                            <button id="ptr-step1" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">1. 주소 할당 (`p_map = &treasure`)</button>
+                            <button id="ptr-step2" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" disabled>2. 값 변경 (`*p_map = 250`)</button>
                             <button id="ptr-reset" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">초기화</button>
                         </div>
                         <p id="ptr-log" class="mt-4 text-center font-mono p-2 bg-blue-100 text-blue-800 rounded-md h-10 flex items-center justify-center"></p>
                     </div>
-                    
                     <div class="mt-10">
                         <h3 class="text-2xl font-bold mb-4">2.1. 포인터와 배열: 뗄 수 없는 관계</h3>
                         <p class="mb-4">C언어에서 배열의 이름은 사실 **배열의 첫 번째 요소의 메모리 주소를 가리키는 상수 포인터**입니다. 이 특징 때문에 포인터와 배열은 매우 밀접하게 사용됩니다.</p>
@@ -298,7 +243,6 @@ int *ptr = scores; // 포인터에 배열의 시작 주소를 할당
 printf("%d\n", *(ptr + 2)); // 30 출력 (scores[2]와 동일)
 </div>
                     </div>
-
                     <div class="interactive-box mt-8">
                         <h3 class="text-xl font-semibold mb-4">포인터로 배열 탐색하기</h3>
                         <p class="mb-4">포인터 연산(`p++`)을 통해 배열의 각 요소를 순서대로 가리킬 수 있습니다. 아래 버튼을 눌러 포인터가 배열을 어떻게 이동하는지 확인해보세요.</p>
@@ -312,13 +256,12 @@ printf("%d\n", *(ptr + 2)); // 30 출력 (scores[2]와 동일)
                             <p id="ptr-array-log" class="font-mono p-2 bg-blue-100 text-blue-800 rounded-md h-full flex items-center justify-center"></p>
                         </div>
                          <div class="mt-6 flex flex-wrap gap-3 justify-center">
-                            <button id="ptr-array-init" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">1. 포인터 초기화 (`p = arr`)</button>
-                            <button id="ptr-array-inc" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition" disabled>2. 포인터 증가 (`p++`)</button>
+                            <button id="ptr-array-init" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">1. 포인터 초기화 (`p = arr`)</button>
+                            <button id="ptr-array-inc" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition" disabled>2. 포인터 증가 (`p++`)</button>
                             <button id="ptr-array-reset" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">초기화</button>
                         </div>
                     </div>
-
-                     <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                     <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 2</h4>
                         <p class="mt-2 text-gray-700">1. `int num = 10;` 변수와 `int *ptr;` 포인터를 만드세요.<br>2. `ptr`이 `num`을 가리키도록 한 뒤, `ptr`을 이용해서 `num`의 값을 50으로 변경하고 `num`의 값을 출력하여 확인하세요.<br>3. (심화) 정수 배열을 선언하고 포인터를 이용해 반복문을 돌면서 배열의 모든 요소에 5를 더하는 코드를 작성하세요.</p>
                     </div>
@@ -333,7 +276,7 @@ printf("%d\n", *(ptr + 2)); // 30 출력 (scores[2]와 동일)
                         <div id="matrix-viz" class="p-4 bg-gray-50 rounded-lg"></div>
                         <div id="matrix-tooltip" class="mt-4 text-center font-mono p-2 bg-green-100 text-green-800 rounded-md h-10 flex items-center justify-center"></div>
                     </div>
-                     <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                     <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 3</h4>
                         <p class="mt-2 text-gray-700">3x3 크기의 2차원 배열 2개를 만들고, 두 행렬의 같은 위치 요소끼리 더한 결과를 새로운 2차원 배열에 저장하여 출력하는 프로그램을 작성해보세요.</p>
                     </div>
@@ -342,7 +285,6 @@ printf("%d\n", *(ptr + 2)); // 30 출력 (scores[2]와 동일)
                 <!-- Part 4: Functions --><section id="part4" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 4. 함수: 기능별 마법 상자 ⚙️</h2>
                     <p class="text-lg text-gray-600 mb-6">함수는 특정 작업을 수행하는 코드 덩어리를 묶어 이름을 붙인 것입니다. 코드를 재사용하고, 프로그램을 기능별로 깔끔하게 정리할 수 있게 해주는 C언어의 핵심입니다. 함수의 여러 유형을 단계별로 알아봅시다.</p>
-
                     <div class="space-y-8">
                         <div>
                             <h3 class="text-2xl font-bold mb-4">4.1. 가장 간단한 함수: 입력 X, 반환값 X</h3>
@@ -359,10 +301,9 @@ int main() {
     return 0;
 }</div>
                         </div>
-
                         <div>
                             <h3 class="text-2xl font-bold mb-4">4.2. 재료를 받는 함수: 입력 O, 반환값 X</h3>
-                            <p class="mb-4">외부에서 데이터(재료)를 받아 작업을 수행하는 함수입니다. 자판기에 동전을 넣으면 정해진 음료수가 나오는 것과 비슷하죠. 여기서 데이터를 전달하는 방식을 <b class="text-[#D4A373]">Call by Value (값에 의한 호출)</b>라고 합니다. 원본 데이터의 '값'만 복사해서 전달하므로, 함수 안에서 데이터를 바꿔도 원본은 안전하게 유지됩니다.</p>
+                            <p class="mb-4">외부에서 데이터(재료)를 받아 작업을 수행하는 함수입니다. 자판기에 동전을 넣으면 정해진 음료수가 나오는 것과 비슷하죠. 여기서 데이터를 전달하는 방식을 <b class="text-indigo-600">Call by Value (값에 의한 호출)</b>라고 합니다. 원본 데이터의 '값'만 복사해서 전달하므로, 함수 안에서 데이터를 바꿔도 원본은 안전하게 유지됩니다.</p>
                             <div class="code-block">#include &lt;stdio.h&gt;
 
 // 정수 하나를 받아서 해당 단의 구구단을 출력하는 함수
@@ -378,7 +319,6 @@ int main() {
     return 0;
 }</div>
                         </div>
-
                         <div>
                             <h3 class="text-2xl font-bold mb-4">4.3. 결과물을 돌려주는 함수: 입력 O, 반환값 O</h3>
                             <p class="mb-4">데이터를 받아 계산한 뒤, 그 결과물을 함수를 호출한 곳으로 돌려주는 가장 표준적인 함수입니다. 계산기에 숫자를 입력하고 '='를 누르면 결과가 화면에 표시되는 것과 같습니다. `return` 키워드를 사용해 결과값을 반환합니다.</p>
@@ -397,7 +337,6 @@ int main() {
 }</div>
                         </div>
                     </div>
-                    
                      <div class="interactive-box mt-10">
                         <h3 class="text-xl font-semibold mb-4 text-center">핵심 비교: 값 전달 vs 주소 전달</h3>
                         <p class="text-center mb-6">함수에 값을 넘기는 방식(Call by Value)과 주소를 넘기는 방식(Call by Reference)의 가장 큰 차이점은 '원본 데이터의 변경 가능 여부'입니다. 아래 시뮬레이션으로 그 차이를 직접 확인해보세요.</p>
@@ -414,7 +353,7 @@ int main() {
                                         <span class="value" id="cbv-func-val">?</span>
                                     </div>
                                 </div>
-                                <button id="cbv-run" class="w-full mt-4 bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">함수 호출</button>
+                                <button id="cbv-run" class="w-full mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">함수 호출</button>
                                 <p id="cbv-log" class="mt-2 text-center text-sm h-5"></p>
                             </div>
                              <div>
@@ -429,15 +368,14 @@ int main() {
                                         <span class="value" id="cbr-func-val">?</span>
                                     </div>
                                 </div>
-                                <button id="cbr-run" class="w-full mt-4 bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">Swap 함수 호출</button>
+                                <button id="cbr-run" class="w-full mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Swap 함수 호출</button>
                                 <p id="cbr-log" class="mt-2 text-center text-sm h-5"></p>
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-8">
                         <h3 class="text-2xl font-bold mb-4">4.4. 원본을 바꾸는 함수: 포인터 매개변수</h3>
-                        <p class="mb-4">함수 안에서 `main` 함수에 있는 원본 변수의 값을 직접 바꾸고 싶을 때 사용합니다. 이때는 변수의 '값'이 아닌 변수의 '주소'를 알려주는 포인터를 사용하며, 이를 <b class="text-[#D4A373]">Call by Reference (참조에 의한 호출)</b>라고 합니다.</p>
+                        <p class="mb-4">함수 안에서 `main` 함수에 있는 원본 변수의 값을 직접 바꾸고 싶을 때 사용합니다. 이때는 변수의 '값'이 아닌 변수의 '주소'를 알려주는 포인터를 사용하며, 이를 <b class="text-indigo-600">Call by Reference (참조에 의한 호출)</b>라고 합니다.</p>
                         <div class="code-block">#include &lt;stdio.h&gt;
 
 // 두 변수의 '주소'를 받아 값을 직접 교환하는 swap 함수
@@ -457,7 +395,7 @@ int main() {
     return 0;
 }</div>
                     </div>
-                     <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                     <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 4</h4>
                         <p class="mt-2 text-gray-700">정수 배열과 그 크기를 인자로 받아서, 배열의 모든 요소의 합을 반환하는 `sum_array()` 함수를 작성해보세요.</p>
                     </div>
@@ -466,7 +404,6 @@ int main() {
                 <!-- Part 5: Recursion --><section id="part5" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 5. 함수 심화: 재귀 🔄</h2>
                     <p class="text-lg text-gray-600 mb-6">재귀 함수는 자기 자신을 다시 호출하여 문제를 해결하는 강력한 프로그래밍 기법입니다. 복잡한 문제를 간단한 규칙으로 풀어내는 재귀의 세계를 탐험해봅시다.</p>
-
                     <div class="interactive-box mb-8">
                         <h3 class="text-xl font-semibold mb-4">하노이의 탑</h3>
                         <p class="mb-4">원판 개수를 선택하고 '시작' 버튼을 눌러 하노이의 탑 재귀 알고리즘이 어떻게 작동하는지 시각적으로 확인하세요.</p>
@@ -477,20 +414,19 @@ int main() {
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
-                            <button id="hanoi-start" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">시작</button>
+                            <button id="hanoi-start" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">시작</button>
                             <button id="hanoi-reset" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">초기화</button>
                         </div>
                         <canvas id="hanoi-canvas" width="600" height="250" class="mx-auto hanoi-canvas"></canvas>
                         <p id="hanoi-log" class="mt-2 text-center font-mono p-2 bg-purple-100 text-purple-800 rounded-md h-10 flex items-center justify-center"></p>
                     </div>
-
                     <div class="interactive-box">
                         <h3 class="text-xl font-semibold mb-4">피보나치와 메모이제이션</h3>
                         <p class="mb-4">같은 재귀 문제도 메모이제이션(Memoization) 기법을 사용하면 성능이 극적으로 향상됩니다. n번째 피보나치 수를 계산할 때, 두 방식의 함수 호출 횟수를 비교해보세요.</p>
                          <div class="flex items-center justify-center gap-4 mb-4">
                             <label for="fib-n">n 값:</label>
                             <input type="number" id="fib-n" value="10" min="1" max="20" class="border rounded px-2 py-1 w-20 text-center">
-                            <button id="fib-calc" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">계산</button>
+                            <button id="fib-calc" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">계산</button>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
                             <div>
@@ -508,17 +444,16 @@ int main() {
                             <canvas id="fib-chart"></canvas>
                         </div>
                     </div>
-                    <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                    <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 5</h4>
                          <p class="mt-2 text-gray-700">1. 양의 정수 `n`을 인자로 받아서 `n!` (팩토리얼)을 계산하는 재귀 함수 `factorial()`을 작성하세요. (힌트: `n! = n * (n-1)!` 이고, `0! = 1` 입니다.)</p>
                          <p class="mt-2 text-gray-700">2. (도전 과제) 하노이의 탑 코드에서 원판의 개수가 4개일 때, 총 몇 번의 이동이 발생하는지 직접 세어보고, `hanoi` 함수 내에 `count` 변수를 사용하여 프로그램이 이동 횟수를 직접 세도록 코드를 수정해보세요.</p>
                     </div>
                 </section>
-
+                
                 <!-- Part 6: Struct & Union --><section id="part6" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 6. 구조체 & 공용체: 데이터 묶음과 공간 절약 📦</h2>
                     <p class="text-lg text-gray-600 mb-6">C언어에서 여러 종류의 데이터를 하나의 논리적인 단위로 묶는 방법인 구조체(`struct`)와 공용체(`union`)에 대해 알아봅시다. 이들은 복잡한 데이터를 다루거나 메모리 효율을 높일 때 유용하게 사용됩니다.</p>
-
                     <h3 class="text-2xl font-bold mt-8 mb-4">6.1. 구조체 (Structure): 다양한 데이터의 묶음</h3>
                     <p class="mb-4">구조체는 서로 다른 자료형의 변수들을 하나로 묶어 새로운 자료형을 정의하는 방식입니다. 마치 학생의 이름, 학번, 점수 등 여러 정보를 하나의 '학생 정보' 묶음으로 만드는 것과 같습니다.</p>
                     <div class="code-block">#include &lt;stdio.h&gt;
@@ -552,7 +487,6 @@ int main() {
 
     return 0;
 }</div>
-                    
                     <div class="interactive-box mt-8">
                         <h4 class="text-xl font-semibold mb-4 text-center">구조체 배열로 반 학생 표현하기</h4>
                         <p class="mb-4 text-center">여러 학생의 정보를 구조체 배열로 관리할 수 있습니다. 각 칸이 하나의 학생 정보 묶음입니다.</p>
@@ -561,7 +495,6 @@ int main() {
                             <p class="font-bold text-lg mt-4">💡 시각화: 구조체 배열로 표현된 반 학생들</p>
                         </div>
                     </div>
-                    
                     <h3 class="text-2xl font-bold mt-12 mb-4">6.2. 공용체 (Union): 메모리 공간 재활용</h3>
                     <p class="mb-4">공용체는 구조체와 비슷하게 여러 자료형을 묶을 수 있지만, 모든 멤버가 **같은 메모리 공간을 공유**한다는 점이 다릅니다. 이는 메모리 공간을 절약할 때 사용되며, 한 번에 하나의 멤버만 값을 가질 수 있습니다.</p>
                     <div class="code-block">#include &lt;stdio.h&gt;
@@ -599,11 +532,9 @@ int main() {
     
     return 0;
 }</div>
-                    
                     <div class="interactive-box mt-8">
                         <h4 class="text-xl font-semibold mb-4 text-center">공용체 메모리 공간 시각화</h4>
                         <p class="mb-4 text-center">공용체는 가장 큰 멤버의 크기만큼만 메모리를 할당받아 공유합니다. 활성화 버튼을 눌러보세요.</p>
-                        
                         <div class="union-container">
                              <div class="mt-6 text-center">
                                  <img src="https://storage.googleapis.com/aai-web-samples/c-union-memory.png" alt="공용체 메모리 시각화" class="mx-auto rounded-lg shadow-md">
@@ -621,7 +552,6 @@ int main() {
                             </div>
                         </div>
                     </div>
-
                     <h3 class="text-2xl font-bold mt-12 mb-4">6.3. 구조체 vs 공용체: 메모리 공간 비교</h3>
                     <p class="mb-4">가장 큰 차이점은 메모리 할당 방식입니다. 구조체는 모든 멤버가 독립적인 공간을 가지지만, 공용체는 가장 큰 멤버의 크기만큼만 공간을 할당받아 모든 멤버가 이 공간을 공유합니다.</p>
                     <div class="p-6 bg-blue-50 border-l-4 border-blue-400 mb-6">
@@ -636,8 +566,7 @@ int main() {
                         <p class="mt-1 text-gray-700 font-bold">총 20 바이트</p>
                         <p class="mt-4 text-gray-700">한 번에 하나의 멤버만 유효한 값을 가질 수 있으며, 다른 멤버에 값을 할당하면 이전 멤버의 값이 손상됩니다.</p>
                     </div>
-                    
-                    <div class="mt-8 p-6 bg-amber-50 border-l-4 border-amber-400">
+                    <div class="mt-8 p-6 bg-indigo-50 border-l-4 border-indigo-400">
                         <h4 class="font-bold text-lg">🧑‍💻 실습 문제 6</h4>
                         <p class="mt-2 text-gray-700">1. 다음과 같은 정보를 담는 구조체 `struct Book { char title[50]; char author[30]; int year; };`를 정의하고, `Book` 타입 변수를 선언하여 값을 할당하고 출력해보세요.</p>
                         <p class="mt-2 text-gray-700">2. (심화) 구조체 `struct Point { int x; int y; };`와 이 구조체를 인자로 받아 두 점 사이의 거리를 계산하는 함수 `calculate_distance(struct Point p1, struct Point p2)`를 작성해보세요. (힌트: `sqrt`, `pow` 함수는 `math.h`에 있습니다.)</p>
@@ -647,7 +576,6 @@ int main() {
                 <!-- Part 7: Data Structures Intro --><section id="part7" class="mb-16 scroll-mt-20">
                     <h2 class="text-3xl font-bold mb-2">Part 7. 동적 자료구조 입문 ⛓️</h2>
                     <p class="text-lg text-gray-600 mb-6">배열은 크기가 고정되어 있지만, 포인터를 사용하면 프로그램 실행 중에 크기가 변하는 '동적' 자료구조를 만들 수 있습니다. 가장 대표적인 세 가지의 기본 원리를 알아봅시다.</p>
-                    
                     <div class="interactive-box mb-8">
                         <h3 class="text-xl font-semibold mb-4">연결 리스트 (Linked List)</h3>
                         <p class="mb-4">데이터와 다음 노드를 가리키는 포인터를 묶은 '노드'들이 기차처럼 연결된 구조입니다. 필요할 때마다 칸(노드)을 추가하거나 뺄 수 있어 유연합니다.</p>
@@ -655,18 +583,17 @@ int main() {
                              <div class="ds-node">HEAD</div>
                         </div>
                         <div class="mt-4 flex flex-wrap gap-3 justify-center">
-                            <button id="ll-add" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">노드 추가</button>
+                            <button id="ll-add" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">노드 추가</button>
                             <button id="ll-remove" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">노드 삭제</button>
                         </div>
                     </div>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="interactive-box">
                             <h3 class="text-xl font-semibold mb-4 text-center">스택 (Stack) - LIFO</h3>
                             <p class="mb-4 text-center text-sm">마지막에 들어온 것이 가장 먼저 나갑니다. (Last-In, First-Out)</p>
                             <div id="stack-viz" class="ds-viz stack-viz"></div>
                              <div class="mt-4 flex flex-wrap gap-3 justify-center">
-                                <button id="stack-push" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">Push</button>
+                                <button id="stack-push" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Push</button>
                                 <button id="stack-pop" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">Pop</button>
                             </div>
                         </div>
@@ -675,58 +602,24 @@ int main() {
                             <p class="mb-4 text-center text-sm">가장 먼저 들어온 것이 가장 먼저 나갑니다. (First-In, First-Out)</p>
                             <div id="queue-viz" class="ds-viz"></div>
                              <div class="mt-4 flex flex-wrap gap-3 justify-center">
-                                <button id="queue-enq" class="bg-[#D4A373] text-white px-4 py-2 rounded-md hover:bg-[#C8935E] transition">Enqueue</button>
+                                <button id="queue-enq" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Enqueue</button>
                                 <button id="queue-deq" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">Dequeue</button>
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
+    <!-- 푸터 -->
+    <footer class="text-center py-8 mt-10">
+        <p class="text-sm text-slate-500">연락처: thiskorea@cberi.go.kr</p>
+    </footer>
+
+    <!-- 통합된 스크립트 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Navigation ---
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const mobileNav = document.getElementById('mobile-nav');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.4
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => {
-                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                        });
-                        if (document.activeElement !== mobileNav) {
-                           mobileNav.value = `#${id}`;
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => observer.observe(section));
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-            
-            mobileNav.addEventListener('change', (e) => {
-                document.querySelector(e.target.value).scrollIntoView({ behavior: 'smooth' });
-            });
-
-
             // --- Part 1: 1D Array Visualization ---
             const arrayData = [88, 95, 76, 100, 81];
             const arrayViz = document.getElementById('array-viz');
@@ -734,7 +627,7 @@ int main() {
             
             arrayData.forEach((value, index) => {
                 const cell = document.createElement('div');
-                cell.className = 'w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-lg font-bold bg-white transition cursor-pointer hover:bg-[#D4A373] hover:text-white';
+                cell.className = 'w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-lg font-bold bg-white transition cursor-pointer hover:bg-indigo-500 hover:text-white';
                 cell.textContent = value;
                 cell.dataset.index = index;
                 cell.dataset.value = value;
@@ -859,7 +752,6 @@ int main() {
             ptrArrayResetBtn.addEventListener('click', resetPtrArrayDemo);
             resetPtrArrayDemo();
 
-
             // --- Part 3: 2D Array Visualization ---
             const matrixData = [
                 [10, 20, 30, 40],
@@ -874,7 +766,7 @@ int main() {
                 rowEl.className = 'flex justify-center gap-2 mb-2';
                 row.forEach((value, c_idx) => {
                     const cell = document.createElement('div');
-                    cell.className = 'w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-lg font-bold bg-white transition cursor-pointer hover:bg-[#D4A373] hover:text-white';
+                    cell.className = 'w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-lg font-bold bg-white transition cursor-pointer hover:bg-indigo-500 hover:text-white';
                     cell.textContent = value;
                     cell.dataset.index = `[${r_idx}][${c_idx}]`;
                     cell.dataset.value = value;
@@ -913,7 +805,6 @@ int main() {
             const cbrFuncVal = document.getElementById('cbr-func-val');
             const cbrRunBtn = document.getElementById('cbr-run');
             const cbrLog = document.getElementById('cbr-log');
-            const cbrMainValSpan = cbrMainVal.parentElement.querySelector('.font-semibold');
 
             cbrRunBtn.addEventListener('click', () => {
                 cbrMainVal.textContent = '10';
@@ -942,14 +833,11 @@ int main() {
 
             function drawHanoi() {
                 hanoiCtx.clearRect(0, 0, hanoiCanvas.width, hanoiCanvas.height);
-                // Draw pegs
                 hanoiCtx.fillStyle = '#A0AEC0';
                 for (let i = 0; i < 3; i++) {
                     hanoiCtx.fillRect(pegX[i] - 5, 50, 10, 180);
                     hanoiCtx.fillRect(pegX[i] - 50, baseY, 100, 10);
                 }
-
-                // Draw disks
                 for (let i = 0; i < 3; i++) {
                     for (let j = 0; j < pegs[i].length; j++) {
                         const disk = pegs[i][j];
@@ -963,12 +851,8 @@ int main() {
             function resetHanoi() {
                 if(animationFrameId) cancelAnimationFrame(animationFrameId);
                 const n = parseInt(hanoiDisksSelect.value);
-                pegs[0] = [];
-                pegs[1] = [];
-                pegs[2] = [];
-                for (let i = n; i > 0; i--) {
-                    pegs[0].push(i);
-                }
+                pegs[0] = []; pegs[1] = []; pegs[2] = [];
+                for (let i = n; i > 0; i--) { pegs[0].push(i); }
                 hanoiLogEl.textContent = '초기 상태';
                 hanoiStartBtn.disabled = false;
                 drawHanoi();
@@ -1008,7 +892,6 @@ int main() {
                 hanoiStartBtn.disabled = true;
                 animateMoves();
             });
-
             hanoiResetBtn.addEventListener('click', resetHanoi);
             hanoiDisksSelect.addEventListener('change', resetHanoi);
             resetHanoi();
@@ -1042,20 +925,8 @@ int main() {
                 const data = {
                     labels: ['함수 호출 횟수'],
                     datasets: [
-                        {
-                            label: '일반 재귀',
-                            data: [normal],
-                            backgroundColor: 'rgba(229, 62, 62, 0.6)',
-                            borderColor: 'rgba(229, 62, 62, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: '메모이제이션',
-                            data: [memo],
-                            backgroundColor: 'rgba(56, 161, 105, 0.6)',
-                            borderColor: 'rgba(56, 161, 105, 1)',
-                            borderWidth: 1
-                        }
+                        { label: '일반 재귀', data: [normal], backgroundColor: 'rgba(229, 62, 62, 0.6)', borderColor: 'rgba(229, 62, 62, 1)', borderWidth: 1 },
+                        { label: '메모이제이션', data: [memo], backgroundColor: 'rgba(56, 161, 105, 0.6)', borderColor: 'rgba(56, 161, 105, 1)', borderWidth: 1 }
                     ]
                 };
                 if(fibChart) {
@@ -1069,12 +940,8 @@ int main() {
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            scales: {
-                                y: { beginAtZero: true, type: 'logarithmic' }
-                            },
-                            plugins: {
-                                title: { display: true, text: '알고리즘별 함수 호출 횟수 비교 (로그 스케일)'}
-                            }
+                            scales: { y: { beginAtZero: true, type: 'logarithmic' } },
+                            plugins: { title: { display: true, text: '알고리즘별 함수 호출 횟수 비교 (로그 스케일)'} }
                         }
                     });
                 }
@@ -1082,20 +949,16 @@ int main() {
             
             fibCalcBtn.addEventListener('click', () => {
                 const n = parseInt(fibN.value);
-                
                 normalCalls = 0;
                 fibNormal(n);
                 fibNormalCallsEl.textContent = normalCalls.toLocaleString();
-
                 memoCalls = 0;
                 memo = {};
                 fibMemo(n);
                 fibMemoCallsEl.textContent = memoCalls.toLocaleString();
-
                 updateFibChart(normalCalls, memoCalls);
             });
             updateFibChart(0,0);
-
 
             // --- Part 6: Union Visualization ---
             const unionCurrentValueEl = document.getElementById('union-current-value');
@@ -1107,60 +970,50 @@ int main() {
             unionSetIntBtn.addEventListener('click', () => {
                 unionCurrentValueEl.textContent = '12345';
                 unionActiveMemberEl.textContent = '활성화된 멤버: int i';
-                unionCurrentValueEl.style.color = '#3B82F6'; // Blue for int
+                unionCurrentValueEl.style.color = '#3B82F6';
             });
-
             unionSetFloatBtn.addEventListener('click', () => {
                 unionCurrentValueEl.textContent = '3.14159';
                 unionActiveMemberEl.textContent = '활성화된 멤버: float f';
-                unionCurrentValueEl.style.color = '#10B981'; // Green for float
+                unionCurrentValueEl.style.color = '#10B981';
             });
-
             unionSetStringBtn.addEventListener('click', () => {
-                unionCurrentValueEl.textContent = 'HELLO WORLD!';
+                unionCurrentValueEl.textContent = 'HELLO!';
                 unionActiveMemberEl.textContent = '활성화된 멤버: char str[20]';
-                unionCurrentValueEl.style.color = '#8B5CF6'; // Purple for string
+                unionCurrentValueEl.style.color = '#8B5CF6';
             });
-
-            // Initial state for Union
             unionCurrentValueEl.textContent = '???';
             unionActiveMemberEl.textContent = '멤버를 선택하세요.';
             unionCurrentValueEl.style.color = '#2C3E50';
 
             // --- Part 7: Data Structures ---
-            // Linked List
             const llViz = document.getElementById('ll-viz');
             const llAddBtn = document.getElementById('ll-add');
             const llRemoveBtn = document.getElementById('ll-remove');
             let llCounter = 0;
-
             llAddBtn.addEventListener('click', () => {
                 llCounter++;
                 const arrow = document.createElement('span');
                 arrow.className = 'ds-arrow';
                 arrow.textContent = '→';
                 llViz.appendChild(arrow);
-                
                 const node = document.createElement('div');
                 node.className = 'ds-node';
                 node.textContent = llCounter * 10;
                 llViz.appendChild(node);
             });
-
             llRemoveBtn.addEventListener('click', () => {
                 if(llCounter > 0) {
-                    llViz.removeChild(llViz.lastChild); // remove node
-                    llViz.removeChild(llViz.lastChild); // remove arrow
+                    llViz.removeChild(llViz.lastChild);
+                    llViz.removeChild(llViz.lastChild);
                     llCounter--;
                 }
             });
             
-            // Stack
             const stackViz = document.getElementById('stack-viz');
             const stackPushBtn = document.getElementById('stack-push');
             const stackPopBtn = document.getElementById('stack-pop');
             let stackCounter = 0;
-
             stackPushBtn.addEventListener('click', () => {
                 stackCounter++;
                 const item = document.createElement('div');
@@ -1168,19 +1021,16 @@ int main() {
                 item.textContent = stackCounter;
                 stackViz.appendChild(item);
             });
-
             stackPopBtn.addEventListener('click', () => {
                  if(stackViz.children.length > 0) {
                     stackViz.removeChild(stackViz.lastChild);
                  }
             });
             
-            // Queue
             const queueViz = document.getElementById('queue-viz');
             const queueEnqBtn = document.getElementById('queue-enq');
             const queueDeqBtn = document.getElementById('queue-deq');
             let queueCounter = 0;
-            
             queueEnqBtn.addEventListener('click', () => {
                 queueCounter++;
                 const item = document.createElement('div');
@@ -1188,15 +1038,13 @@ int main() {
                 item.textContent = queueCounter;
                 queueViz.appendChild(item);
             });
-
             queueDeqBtn.addEventListener('click', () => {
                 if(queueViz.children.length > 0) {
                     queueViz.removeChild(queueViz.firstChild);
                 }
             });
-
         });
     </script>
+
 </body>
 </html>
-
