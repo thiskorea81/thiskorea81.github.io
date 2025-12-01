@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThisKorea81 - 인공지능 & 소프트웨어 교육</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-700">
+
+    <div id="app" class="min-h-screen flex flex-col">
+        
+        <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+            <nav class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <a href="#" @click.prevent="currentTab = 'home'" class="text-2xl font-bold text-indigo-600 tracking-tight hover:opacity-80 transition">
+                        ThisKorea81
+                    </a>
+
+                    <div class="hidden md:flex items-center space-x-1">
+                        <button 
+                            v-for="tab in tabs" 
+                            :key="tab.id"
+                            @click="currentTab = tab.id"
+                            :class="[
+                                'px-4 py-2 rounded-lg font-medium transition-all duration-200',
+                                currentTab === tab.id 
+                                    ? 'bg-indigo-50 text-indigo-600 shadow-sm' 
+                                    : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'
+                            ]"
+                        >
+                            {{ tab.name }}
+                        </button>
+                    </div>
+
+                    <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden p-2 text-slate-600 hover:text-indigo-600 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div v-show="isMobileMenuOpen" class="md:hidden mt-4 pb-2 space-y-2 border-t border-slate-100 pt-4">
+                    <button 
+                        v-for="tab in tabs" 
+                        :key="tab.id"
+                        @click="currentTab = tab.id; isMobileMenuOpen = false"
+                        :class="[
+                            'block w-full text-left px-4 py-3 rounded-lg font-medium transition-colors',
+                            currentTab === tab.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:bg-slate-50'
+                        ]"
+                    >
+                        {{ tab.name }}
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow container mx-auto px-6 py-8 md:py-12">
+            <transition name="fade" mode="out-in">
+                
+                <div v-if="currentTab === 'home'" key="home" class="max-w-4xl mx-auto text-center space-y-8 py-10">
+                    <div class="inline-block p-3 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        인공지능 지식 공유 공간
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                        AI 기술을 함께 배우고 성장하는 곳입니다.<br class="hidden md:block">
+                        파이썬, 정보과학, 컴퓨터 비전 등 다양한 지식을 탐험해보세요.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 mt-8">
+                        <button @click="currentTab = 'class'" class="px-8 py-3 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            수업 자료 보러가기
+                        </button>
+                        <button @click="currentTab = 'project'" class="px-8 py-3 bg-white text-indigo-600 border border-indigo-200 font-semibold rounded-full hover:bg-indigo-50 transition shadow-sm hover:shadow-md">
+                            프로젝트 구경하기
+                        </button>
+                    </div>
+                </div>
+
+                <div v-else-if="currentTab === 'class'" key="class">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">수업 자료</h2>
+                        <p class="text-slate-600">다양한 주제의 학습 자료를 선택하여 학습하세요.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        <div v-for="(item, index) in classData" :key="index" class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-xl hover:border-indigo-100 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
+                            <div class="mb-4">
+                                <span class="inline-block px-3 py-1 text-xs font-semibold text-indigo-600 bg-indigo-50 rounded-full mb-3">
+                                    {{ item.category }}
+                                </span>
+                                <h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                    {{ item.title }}
+                                </h3>
+                            </div>
+                            <p class="text-slate-600 mb-6 flex-grow text-sm leading-relaxed">
+                                {{ item.desc }}
+                            </p>
+                            <a :href="item.link" class="inline-flex items-center justify-center w-full px-4 py-2 bg-slate-50 text-slate-700 font-medium rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                학습하기
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else-if="currentTab === 'project'" key="project">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">프로젝트</h2>
+                        <p class="text-slate-600">함께 진행하거나 연구한 프로젝트 목록입니다.</p>
+                    </div>
+
+                    <div class="space-y-6 max-w-4xl mx-auto">
+                        <div v-for="(project, index) in projectData" :key="index" class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 hover:shadow-lg transition duration-300">
+                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span class="px-2 py-1 text-xs font-bold text-slate-500 bg-slate-100 rounded">
+                                            {{ project.period }}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-3">{{ project.title }}</h3>
+                                    <p v-if="project.desc" class="text-slate-600 mb-4">{{ project.desc }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-3 mt-4 pt-4 border-t border-slate-50">
+                                <a v-for="link in project.links" :key="link.url" :href="link.url" target="_blank" 
+                                   :class="[
+                                        'inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg transition-colors',
+                                        link.type === 'github' ? 'bg-slate-800 text-white hover:bg-slate-700' : 'bg-indigo-600 text-white hover:bg-indigo-500'
+                                   ]">
+                                    <span v-if="link.type === 'github'" class="mr-2">GitHub</span>
+                                    <span v-else class="mr-2">Site</span>
+                                    {{ link.text }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else-if="currentTab === 'contact'" key="contact">
+                    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-slate-100 text-center">
+                        <div class="inline-block p-4 bg-indigo-50 rounded-full text-indigo-600 mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-8">연락처</h2>
+                        
+                        <div class="space-y-6 text-left inline-block max-w-sm w-full">
+                            <div>
+                                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-1">Email</h3>
+                                <p class="text-lg font-medium text-slate-800 break-all">thiskorea@cberi.go.kr</p>
+                            </div>
+                            <div class="pt-4 border-t border-slate-100">
+                                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-1">Position</h3>
+                                <p class="text-lg font-medium text-slate-800">주성고등학교 정보컴퓨터 교사</p>
+                                <p class="text-slate-600 mt-1">충북중등정보교사연구회 회장</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </transition>
+        </main>
+
+        <footer class="bg-white border-t border-slate-200 py-8 text-center">
+            <div class="container mx-auto px-6">
+                <p class="text-slate-500 text-sm">© 2024 ThisKorea81. All rights reserved.</p>
+                <p class="text-slate-400 text-xs mt-2">Designed with Vue.js & Tailwind CSS</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                // 현재 활성화된 탭 ('home', 'class', 'project', 'contact')
+                const currentTab = ref('home');
+                const isMobileMenuOpen = ref(false);
+
+                // 상단 메뉴 탭 정의
+                const tabs = [
+                    { id: 'home', name: '홈' },
+                    { id: 'class', name: '수업' },
+                    { id: 'project', name: '프로젝트' },
+                    { id: 'contact', name: '연락처' }
+                ];
+
+                /** * [동적 데이터 관리 영역]
+                 * 여기에 내용을 추가하거나 수정하면 웹사이트에 자동으로 반영됩니다.
+                 */
+                 
+                // 수업 자료 목록 데이터
+                const classData = ref([
+                    {
+                        title: "파이썬 (Python)",
+                        category: "프로그래밍",
+                        desc: "파이썬 기초 문법부터 실습 자료까지, 코랩(Colab)을 활용한 학습 가이드입니다.",
+                        link: "python.html"
+                    },
+                    {
+                        title: "C언어 기초",
+                        category: "프로그래밍",
+                        desc: "변수, 포인터, 구조체 등 C언어의 핵심 개념을 시각적으로 배웁니다.",
+                        link: "c_language.html"
+                    },
+                    {
+                        title: "정보과학",
+                        category: "이론",
+                        desc: "컴퓨터 과학의 기초 원리와 정보 교과의 핵심 내용을 다룹니다.",
+                        link: "computer_science.html"
+                    },
+                    {
+                        title: "인공지능 기초",
+                        category: "AI",
+                        desc: "인공지능의 기본 원리와 머신러닝의 기초 개념을 소개합니다.",
+                        link: "ai_basics.html"
+                    },
+                    {
+                        title: "데이터 과학",
+                        category: "Data Science",
+                        desc: "데이터 분석과 시각화 기법을 통해 인사이트를 도출하는 방법을 배웁니다.",
+                        link: "data_science.html"
+                    },
+                    {
+                        title: "컴퓨터 비전",
+                        category: "AI",
+                        desc: "이미지 처리와 인식을 다루는 컴퓨터 비전 기술을 탐구합니다.",
+                        link: "computer_vision.html"
+                    },
+                    {
+                        title: "자연어 처리 (NLP)",
+                        category: "AI",
+                        desc: "인간의 언어를 컴퓨터가 이해하고 처리하는 기술을 학습합니다.",
+                        link: "natural_language_processing.html"
+                    },
+                    {
+                        title: "AI 코딩",
+                        category: "활용",
+                        desc: "생성형 AI를 활용하여 효율적으로 코딩하는 방법과 프롬프트 엔지니어링을 배웁니다.",
+                        link: "ai-coding.html"
+                    },
+                    {
+                        title: "HTML 기초",
+                        category: "Web",
+                        desc: "웹 페이지의 뼈대를 만드는 HTML 태그와 구조를 실습합니다.",
+                        link: "html-exer.html"
+                    },
+                    {
+                        title: "정보 과제 연구",
+                        category: "프로젝트",
+                        desc: "스스로 주제를 선정하고 탐구하는 프로젝트 연구 가이드입니다.",
+                        link: "info_project_research.html"
+                    }
+                ]);
+
+                // 프로젝트 목록 데이터
+                const projectData = ref([
+                    {
+                        title: "생성형 인공지능을 이용한 동화책 만들기",
+                        period: "2023.9.1. ~",
+                        desc: "생성형 AI 도구를 활용하여 스토리와 삽화를 생성하고 동화책을 제작하는 프로젝트입니다.",
+                        links: [
+                            { type: 'github', text: 'Repository', url: 'https://github.com/thiskorea81/project1' }
+                        ]
+                    },
+                    {
+                        title: "티처블머신을 이용한 쇠검은머리쑥새 찾기",
+                        period: "2023.11.4. ~",
+                        desc: "멸종위기종인 쇠검은머리쑥새를 구별하는 이미지 분류 모델을 제작했습니다.",
+                        links: [
+                            { type: 'github', text: 'Repository', url: 'https://github.com/thiskorea81/project_sura' }
+                        ]
+                    },
+                    {
+                        title: "생기부 도우미 (Coteacher)",
+                        period: "2023.12.1. ~",
+                        desc: "교사 업무 경감을 위한 학교생활기록부 작성 보조 웹 서비스입니다.",
+                        links: [
+                            { type: 'github', text: 'Repository', url: 'https://github.com/thiskorea81/coteacher' },
+                            { type: 'site', text: 'Visit Site', url: 'http://13.209.156.176' }
+                        ]
+                    },
+                    {
+                        title: "일정관리 웹 (Vue.js)",
+                        period: "2024.6.1. ~",
+                        desc: "Vue.js를 활용하여 제작한 개인 일정 관리 웹 애플리케이션입니다.",
+                        links: [
+                            { type: 'github', text: 'Repository', url: 'https://github.com/thiskorea81/schedule_web.git' },
+                            { type: 'site', text: 'Visit Site', url: 'https://jocular-boba-1b5d4b.netlify.app/' }
+                        ]
+                    },
+                    {
+                        title: "우리 가족 D-day",
+                        period: "2024.7.11. ~",
+                        desc: "가족 기념일과 주요 일정을 관리하는 D-day 애플리케이션입니다.",
+                        links: [
+                            { type: 'github', text: 'Repository', url: 'https://github.com/thiskorea81/DdayApp.git' }
+                        ]
+                    }
+                ]);
+
+                return {
+                    currentTab,
+                    tabs,
+                    classData,
+                    projectData,
+                    isMobileMenuOpen
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
