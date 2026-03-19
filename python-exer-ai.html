@@ -179,12 +179,35 @@ bot.study()  # 출력: 데이터를 열심히 학습합니다!
             </div>
 
             <div class="space-y-6">
-                <!-- Concept 1 -->
+                <!-- Concept 1 (New: File Upload) -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-table mr-2"></i>1. Pandas 기반 데이터 다루기</h3>
-                    <p class="mb-4">CSV 파일(엑셀 형태)을 읽어오고 병합하여, 우리가 분석할 수 있는 '데이터프레임(DataFrame)' 구조로 만듭니다.</p>
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>1. 코랩에 파일 직접 업로드하기</h3>
+                    <p class="mb-4">내 컴퓨터에 있는 데이터를 코랩으로 가져오는 방법입니다. 코랩 왼쪽의 <strong>폴더 아이콘</strong>을 클릭하여 직접 드래그&드롭 하거나, 아래처럼 파이썬 코드를 실행하여 업로드 창을 띄울 수 있습니다.</p>
                     <div class="rounded-lg overflow-hidden">
-<pre><code class="language-python"># CSV 파일에서 데이터를 읽어옵니다.
+<pre><code class="language-python"># 코드를 실행하면 '파일 선택' 버튼이 나타납니다.
+from google.colab import files
+uploaded = files.upload()
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 2 (Was 1) -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-download mr-2"></i>2. 깃허브에서 실습 데이터 가져오기 (git clone)</h3>
+                    <p class="mb-4">매번 파일을 업로드하기 번거로울 때, 인터넷(깃허브)에 올려둔 데이터를 명령어로 한 번에 복사해 올 수 있습니다. <strong>이번 교과서 실습에서는 이 코드를 가장 먼저 실행해야 합니다.</strong></p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 깃허브(GitHub) 저장소에서 실습 데이터셋 전체 다운로드
+!git clone https://github.com/thiskorea81/ai_basic_datasets.git
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 3 (Was 2) -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-table mr-2"></i>3. Pandas 기반 데이터 다루기</h3>
+                    <p class="mb-4">다운로드한 CSV 파일(엑셀 형태)을 읽어오고 병합하여, 우리가 분석할 수 있는 '데이터프레임(DataFrame)' 구조로 만듭니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># CSV 파일에서 데이터를 읽어옵니다. (위에서 git clone으로 가져온 경로 사용)
 df1 = pd.read_csv('/content/ai_basic_datasets/Iris1.csv', encoding='cp949')
 df2 = pd.read_csv('/content/ai_basic_datasets/Iris2.csv', encoding='cp949')
 
@@ -197,9 +220,9 @@ df.head()
                     </div>
                 </div>
 
-                <!-- Concept 2 -->
+                <!-- Concept 4 (Was 3) -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-broom mr-2"></i>2. 데이터 정제 (결측치 처리)</h3>
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-broom mr-2"></i>4. 데이터 정제 (결측치 처리)</h3>
                     <p class="mb-4">인공지능 모델은 빈 칸(결측치)이 있는 데이터를 싫어합니다. <code>isna()</code>로 확인하고 <code>dropna()</code>로 제거합니다.</p>
                     <div class="rounded-lg overflow-hidden">
 <pre><code class="language-python"># 각 열(특성)마다 비어있는 데이터(결측치)가 몇 개인지 확인합니다.
@@ -211,9 +234,9 @@ df3 = df.dropna()
                     </div>
                 </div>
 
-                <!-- Concept 3 -->
+                <!-- Concept 5 (Was 4) -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-chart-line mr-2"></i>3. 데이터 시각화 기초 (Matplotlib/Seaborn)</h3>
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-chart-line mr-2"></i>5. 데이터 시각화 기초 (Matplotlib/Seaborn)</h3>
                     <p class="mb-4">숫자로만 된 결과를 그래프로 그리면 한눈에 파악하기 쉽습니다. x축과 y축 데이터를 지정하고 화면에 출력합니다.</p>
                     <div class="rounded-lg overflow-hidden">
 <pre><code class="language-python">import matplotlib.pyplot as plt
