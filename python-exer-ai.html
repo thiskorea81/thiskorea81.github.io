@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능 기초를 위한 파이썬 핵심 3차시</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .tab-active { border-bottom-width: 4px; border-color: #3b82f6; color: #1d4ed8; font-weight: 700; }
+        .tab-inactive { color: #6b7280; font-weight: 500; border-bottom-width: 4px; border-color: transparent; }
+        .tab-inactive:hover { color: #374151; border-color: #e5e7eb; }
+        .concept-card { transition: transform 0.2s; }
+        .concept-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <i class="fa-brands fa-python text-blue-600 text-3xl mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-900">AI 실습을 위한 파이썬 기초</h1>
+                </div>
+                <div class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-book-open mr-1"></i> 데이터 전처리 & 기계학습 대비
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-8 mt-2" aria-label="Tabs">
+                <button id="btn-session1" onclick="showTab('session1')" class="tab-btn tab-active pb-3 px-1 text-base font-medium">
+                    1차시: 기본 문법과 데이터
+                </button>
+                <button id="btn-session2" onclick="showTab('session2')" class="tab-btn tab-inactive pb-3 px-1 text-base font-medium">
+                    2차시: 제어문과 모듈
+                </button>
+                <button id="btn-session3" onclick="showTab('session3')" class="tab-btn tab-inactive pb-3 px-1 text-base font-medium">
+                    3차시: 데이터 분석 맛보기
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Session 1 -->
+        <div id="session1" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">1차시: 파이썬 기본 문법과 데이터 다루기</h2>
+                <p class="text-gray-600">인공지능 실습에 필요한 데이터를 담고 조작하는 가장 기본적인 방법들을 배웁니다.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Concept 1 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-box mr-2"></i>1. 변수 (Variables)</h3>
+                    <p class="mb-4">변수는 데이터를 담는 그릇입니다. 모델을 학습시킬 때 원인(독립 변수)과 결과(종속 변수)를 각각 다른 변수에 담아서 사용합니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 실습 코드 미리보기: 데이터프레임(df3)에서 특정 열을 변수 X와 y에 저장합니다.
+X = df3[['꽃잎 길이', '꽃잎 너비']] # 독립 변수 (원인 데이터)
+y = df3['종류']                    # 종속 변수 (결과 데이터)
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 2 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-list mr-2"></i>2. 리스트 (List)</h3>
+                    <p class="mb-4">리스트는 여러 개의 데이터를 대괄호 <code>[ ]</code> 로 묶어서 하나로 관리하는 방법입니다. AI가 새로운 꽃을 예측할 때, 그 꽃의 특징을 리스트로 전달합니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 꽃잎 길이가 1.0cm, 꽃잎 너비가 1.5cm인 새로운 데이터 (2차원 리스트 형태)
+new_data = [[1.0, 1.5]] 
+
+# 모델이 이 새로운 데이터의 종류를 예측합니다.
+print(model.predict(new_data))
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 3 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-plus mr-2"></i>3. 리스트에 추가하기 (append)</h3>
+                    <p class="mb-4">빈 리스트를 만들어두고 <code>append()</code> 명령어를 사용하면 데이터를 차례대로 추가할 수 있습니다. 실험 결과를 순서대로 기록할 때 유용합니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python">acc = [] # 정확도를 저장할 빈 리스트 생성
+
+# 실험 결과가 나올 때마다 리스트 끝에 추가합니다.
+acc.append(0.95) 
+acc.append(0.98)
+
+print(acc) # 출력 결과: [0.95, 0.98]
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session 2 -->
+        <div id="session2" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">2차시: 제어문과 외부 모듈의 활용</h2>
+                <p class="text-gray-600">반복되는 작업을 자동화하고, 전 세계 개발자들이 만들어 둔 강력한 AI 도구들을 불러오는 방법을 배웁니다.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Concept 1 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-rotate-right mr-2"></i>1. for 반복문</h3>
+                    <p class="mb-4">K-최근접 이웃(KNN) 알고리즘에서 최적의 이웃 수(k)를 찾으려면 여러 번 실험을 반복해야 합니다. <code>for</code>문을 사용하면 이 과정을 자동화할 수 있습니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python">k_range = range(1, 20) # 1부터 19까지의 범위 지정
+
+# k값을 1부터 19까지 바꾸어가며 아래 코드를 반복 실행합니다.
+for k in k_range:
+    model = KNeighborsClassifier(n_neighbors = k)
+    model.fit(X_train, y_train)
+    acc.append(model.score(X_test, y_test))
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 2 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-puzzle-piece mr-2"></i>2. 모듈 불러오기 (import)</h3>
+                    <p class="mb-4">우리가 처음부터 인공지능을 다 만들 수는 없습니다. <code>import</code>를 사용하여 Scikit-learn(사이킷런) 같은 기계학습 라이브러리를 가져옵니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 데이터 분석을 위한 pandas 모듈을 불러오고, 'pd'라는 별명으로 부릅니다.
+import pandas as pd
+
+# 기계학습 모듈(sklearn)에서 KNN 분류기 기능만 쏙 뽑아옵니다.
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 3 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>3. 클래스(Class)와 객체(Object) 이해하기</h3>
+                    <p class="mb-4">클래스는 <strong>설계도</strong>이고, 객체는 설계도를 바탕으로 만들어진 <strong>결과물</strong>입니다. 간단한 클래스를 직접 만들어보면, 기계학습 모델이 어떻게 동작하는지 쉽게 이해할 수 있습니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 1. 간단한 클래스(설계도) 직접 정의하기
+class AIBot:
+    def study(self):
+        print("데이터를 열심히 학습합니다!")
+
+# 2. 설계도를 바탕으로 객체(bot) 생성하기
+bot = AIBot()
+
+# 3. 점(.)을 찍어서 객체의 기능(메서드) 사용하기
+bot.study()  # 출력: 데이터를 열심히 학습합니다!
+
+# [AI 실습 연계] 기계학습 모델도 동일한 원리로 사용합니다.
+# model = KNeighborsClassifier() # 위에서 불러온 설계도로 모델 객체 생성
+# model.fit(X_train, y_train)    # fit(학습) 메서드 사용
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session 3 -->
+        <div id="session3" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">3차시: 데이터 분석 및 시각화 기초</h2>
+                <p class="text-gray-600">Pandas로 표 형태의 데이터를 정제하고, Matplotlib을 통해 시각적인 그래프로 표현합니다.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Concept 1 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-table mr-2"></i>1. Pandas 기반 데이터 다루기</h3>
+                    <p class="mb-4">CSV 파일(엑셀 형태)을 읽어오고 병합하여, 우리가 분석할 수 있는 '데이터프레임(DataFrame)' 구조로 만듭니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># CSV 파일에서 데이터를 읽어옵니다.
+df1 = pd.read_csv('/content/ai_basic_datasets/Iris1.csv', encoding='cp949')
+df2 = pd.read_csv('/content/ai_basic_datasets/Iris2.csv', encoding='cp949')
+
+# 두 개의 데이터를 하나로 위아래로 합칩니다.
+df = pd.concat([df1, df2])
+
+# 데이터의 맨 위 5줄만 미리 확인합니다.
+df.head()
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 2 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-broom mr-2"></i>2. 데이터 정제 (결측치 처리)</h3>
+                    <p class="mb-4">인공지능 모델은 빈 칸(결측치)이 있는 데이터를 싫어합니다. <code>isna()</code>로 확인하고 <code>dropna()</code>로 제거합니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python"># 각 열(특성)마다 비어있는 데이터(결측치)가 몇 개인지 확인합니다.
+print(df.isna().sum())
+
+# 결측치가 포함된 행을 모두 제거하고 깨끗한 데이터를 df3에 저장합니다.
+df3 = df.dropna()
+</code></pre>
+                    </div>
+                </div>
+
+                <!-- Concept 3 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3"><i class="fa-solid fa-chart-line mr-2"></i>3. 데이터 시각화 기초 (Matplotlib/Seaborn)</h3>
+                    <p class="mb-4">숫자로만 된 결과를 그래프로 그리면 한눈에 파악하기 쉽습니다. x축과 y축 데이터를 지정하고 화면에 출력합니다.</p>
+                    <div class="rounded-lg overflow-hidden">
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+# x축에는 k값(이웃의 수)을, y축에는 정확도(acc)를 넣어 산점도를 그립니다.
+plt.scatter(k_range, acc) 
+
+plt.xlabel('이웃의 수') # x축 이름 설정
+plt.ylabel('정확도')   # y축 이름 설정
+plt.show()             # 완성된 그래프를 화면에 출력
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <p class="text-gray-400">인공지능 기초 교과 실습을 위한 사전 교육 자료입니다.</p>
+        </div>
+    </footer>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+    <!-- Tab Switching Logic -->
+    <script>
+        function showTab(tabId) {
+            // 모든 탭 컨텐츠 숨기기
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // 모든 탭 버튼 상태 초기화
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('tab-active');
+                el.classList.add('tab-inactive');
+            });
+            
+            // 선택된 탭 컨텐츠 보이기
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // 선택된 탭 버튼 하이라이트
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.remove('tab-inactive');
+            btn.classList.add('tab-active');
+        }
+    </script>
+</body>
+</html>
